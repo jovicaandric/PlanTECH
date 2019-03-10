@@ -1,0 +1,65 @@
+<!--<app-topnav></app-topnav>
+<app-sidebar></app-sidebar>-->
+
+<!-- Content Wrapper. Contains page content -->
+<!--<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"plantage"|translate}}</h1>
+  </section>-->
+<!-- Main content -->
+<section class="content" style="overflow-x: auto;">
+  <table *ngIf='plantages.length' class="table table-condensed table-hover" [mfData]="plantages" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+      <tr>
+        <th>
+          {{ "plantage" | translate }}
+        </th>
+        <th>
+          {{ "owner" | translate }}
+        </th>
+        <th>
+          {{ "new plant" | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let plant of plantages;let i=index;">
+      <tr *ngIf="i<5" (click)="zoomOnPlantage(plant)" style="cursor:pointer;">
+        <td>{{plant.title}}</td>
+        <td>{{plant.owner.firstname + " " + plant.owner.lastname}}</td>
+        <td>
+          <table class="table table-condensed" border="0" style="background: transparent;">
+
+            <thead>
+              <th>{{ "new plant category" | translate }}</th>
+              <th>{{ "new plant" | translate }}</th>
+              <th>{{ "specia" | translate }}</th>
+              <th>{{ "seedmanufacturer" | translate }}</th>
+              <th>{{ "plantagedate" | translate }}</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of plant.plants">
+                <td>{{p.category.text}}</td>
+                <td>{{p.plant.text}}</td>
+                <td>{{p.specie.text}}</td>
+                <td>{{p.seedManufacturer.text}}</td>
+                <td>{{dateToString(p.plantDate)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!plantages.length" class="message-container">
+    <div class="message">
+      <i class="fa fa-leaf" style="font-size: 64pt;"></i>
+      <p class="text-muted" style="font-size: 14pt">{{ "plantages1" | translate }} <span><a [routerLink]="['/plantages']">{{ "noJobOffersHere" | translate }}</a></span>.</p>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->
+<!--</div>-->
+<!-- /.content-wrapper -->

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-default navbar-fixed-top mynav">
+  <div class="container-fluid">
+    <div class="navbar-header pull-left">
+      <a class="navbar-brand">PlanTECH</a>
+    </div>
+
+    <div class="navbar-header pull-right">
+      <ul class="nav navbar-nav pull-left">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell"></span><i class="badge badge-notify">2</i></a>
+          <div class="list-group" class="dropdown-menu">
+            <a class="list-group-item">Markus Leptirijan requested ownership</a>
+            <a class="list-group-item">Tesa Tesanovic requested ownership</a>
+          </div>
+        </li>
+      </ul>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="collapse navbar-collapse pull-right" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a><span class="glyphicon glyphicon-user"></span>{{user.Firstname+" "+user.Lastname}}</a></li>
+          <li><a [routerLink]='["/login"]' (click)="onLogOut()"><span class="glyphicon glyphicon-log-out"></span> {{ "logout" | translate }}</a></li>
+
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">{{currentLang}}<span class="caret"></span></a>
+            <div class="list-group" class="dropdown-menu">
+              <button type="button" class="list-group-item" (click)="changeLang('en')">{{ "en" | translate}}</button>
+              <button type="button" class="list-group-item" (click)="changeLang('srb')">{{ "srb" | translate}}</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+  </div>
+</nav>

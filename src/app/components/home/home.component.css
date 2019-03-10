@@ -1,0 +1,38 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.8;
+}
+
+#home {
+    background-image: url("./images/psenica.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 736px;
+    min-height: 100%;
+}
+
+.w3-bar .w3-button {
+    padding: 16px;
+}
+
+.dropdown-menu {
+  padding: 0px;
+}
+
+.list-group-item {
+    cursor: pointer;
+    border: none;
+    background-color: #F8F8F8;
+}
+
+.list-group-item:hover {
+    /*background-color: #3F51B5;*/
+    background-color: #00A65A;
+    color: white;
+    border: 0;
+}
+
+footer {
+  padding: 10px;
+}

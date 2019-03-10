@@ -1,0 +1,158 @@
+.content-wrapper {
+    
+    background-color: white;
+    overflow: hidden;
+}
+.content{
+height: 80vh;
+overflow:hidden;
+}
+
+#save{
+  color: #d9534f;
+}
+#cancel{
+  color: #428bca;
+}
+
+ #map {
+height: 100%;
+width: 100%;
+margin-top:25px;
+margin-bottom:15px;
+overflow: hidden;
+}
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 10;
+}
+
+.fab-button {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  border-radius: 50%;
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 20px auto 0;
+  position: relative;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  text-align: center;
+}
+
+.fab-button:active,
+.fab-button:focus,
+.fab-button:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.56);
+}
+
+.fab-button:not(:last-child) {
+  width: 42px;
+  height: 42px;
+  margin: 10px auto 0;
+  opacity: 0;
+  -webkit-transform: translateY(50px) scale(0.2);
+  transform: translateY(50px) scale(0.2);
+}
+
+.fab:hover .fab-button:not(:last-child) {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  margin: 15px auto 0;
+}
+
+.fab-button i {
+  color: #fff;
+  font-size: 21px;
+  text-align: center;
+  line-height: 42px;
+}
+
+.fab-button:nth-last-child(1) i {
+  line-height: 56px;
+}
+
+.fab-button:nth-last-child(1) {
+  -webkit-transition-delay: 25ms;
+  transition-delay: 25ms;
+  background-color: #4CAF50;
+  cursor: pointer;
+}
+
+.fab-button:not(:last-child):nth-last-child(2) {
+  -webkit-transition-delay: 50ms;
+  transition-delay: 50ms;
+  background-color: #3f73fc;
+}
+
+.fab-button:not(:last-child):nth-last-child(3) {
+  -webkit-transition-delay: 75ms;
+  transition-delay: 75ms;
+  background-color: #78c831;
+}
+
+.fab-button:not(:last-child):nth-last-child(4) {
+  -webkit-transition-delay: 100ms;
+  transition-delay: 100ms;
+  background-color: #6d5593;
+}
+
+.fab-button:not(:last-child):nth-last-child(5) {
+  -webkit-transition-delay: 125ms;
+  transition-delay: 125ms;
+  background-color: #f8ba24;
+}
+
+.fab-button:not(:last-child):nth-last-child(6) {
+  -webkit-transition-delay: 150ms;
+  transition-delay: 150ms;
+  background-color: #1fc36a;
+}
+
+.fab-button:not(:last-child):nth-last-child(7) {
+  -webkit-transition-delay: 175ms;
+  transition-delay: 175ms;
+  background-color: #242424;
+}
+
+.fab .fab-button:nth-last-child(1) i {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.fab:hover .fab-button:nth-last-child(1) i {
+  transform: rotate(-135deg);
+}
+.fa-plus{
+   font-weight: 100;
+}
+[tooltip]:before {
+  position: absolute;
+  bottom: 22%;
+  right: 100%;
+  border-radius: 3px;
+  background-color: #242424;
+  color: #fff;
+  content: attr(tooltip);
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px;
+  margin-right: 10px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+}
+
+[tooltip]:hover:before,
+[tooltip]:hover:after {
+  background-color: #000;
+}
+
+.fab:hover [tooltip]:before,
+.fab:hover [tooltip]:after {
+  visibility: visible;
+  opacity: 1;
+}

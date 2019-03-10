@@ -1,0 +1,62 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"job-offers"|translate}}</h1>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div *ngIf='jobOffers.length' style="overflow-x:auto;">
+      <table class="table table-striped " [mfData]="jobOffers" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+          <tr>
+            <th>
+              {{ "jobOffersOwnerName" | translate }}
+            </th>
+            <th>
+              {{ "jobOffersOwnerUsername" | translate }}
+            </th>
+            <th>
+              {{ "jobOffersOwnerEmail" | translate }}
+            </th>
+            <th>
+              {{ "jobOffersOwnerMessage" | translate }}
+            </th>
+            <th style="width: 10%">
+              {{"options"|translate}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let offer of jobOffers">
+
+            <td>{{offer.firstname + " " + offer.lastname}}</td>
+            <td>{{offer.username}}</td>
+            <td>{{offer.email}}</td>
+            <td>{{offer.message}}</td>
+            <td>
+              <span class="fa fa-check text-success" (click)=acceptOffer(offer.Id) style="cursor:pointer;" tooltip="Accept Offer"></span>&nbsp;
+              <span class="fa fa-ban text-danger" (click)=refuseOffer(offer.Id) style="cursor:pointer;" tooltip="Refuse Offer"></span>&nbsp;
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div *ngIf="!jobOffers.length" class="message-container">
+      <div class="message">
+        <i class="fa fa-list-alt" style="font-size: 92pt;"></i>
+        <p class="text-muted" style="font-size: 16pt">{{ "noJobOffers" | translate }} <span><a [routerLink]="['/find-work']">{{ "noJobOffersHere" | translate }}</a></span>.</p>
+      </div>
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

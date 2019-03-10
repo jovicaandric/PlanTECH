@@ -1,0 +1,216 @@
+<body>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>{{ "notifications" | translate }}</h1>
+        </section>
+
+        <section class="content ">
+            <ul class="timeline" *ngFor="let item of notifications">
+                <!-- timeline time label -->
+                <li class="time-label" *ngIf="!changeDate(item.date)">
+                    <span class="{{item.stil}}">
+                {{item.date}}
+            </span>
+                </li>
+                <!-- /.timeline-label -->
+
+                <!-- timeline item -->
+                <li class='timelineLi' *ngIf='item.type=="job-offer"'>
+                    <!-- timeline icon -->
+                    <img [src]='job' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a [routerLink]='"/job-offers"'>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="job-request"'>
+                    <!-- timeline icon -->
+                    <img [src]='job' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a [routerLink]='"/job-requests"'>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="job-offer-accepted"'>
+                    <!-- timeline icon -->
+                    <img [src]='job' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a [routerLink]='"/my-employees"'>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="job-request-accepted"'>
+                    <!-- timeline icon -->
+                    <img [src]='job' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a [routerLink]='"/my-employers"'>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="billing"'>
+                    <!-- timeline icon -->
+                    <img [src]='billing' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a [routerLink]='"/admin/owner-requests"'>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="watering"'>
+                    <!-- timeline icon -->
+                    <img [src]='watering' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="reject"'>
+                    <!-- timeline icon -->
+                    <img [src]='reject' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="rain"'>
+                    <!-- timeline icon -->
+                    <img [src]='rain' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="accept"'>
+                    <!-- timeline icon -->
+                    <img [src]='accept' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="cut"'>
+                    <!-- timeline icon -->
+                    <img [src]='cut' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="harvest"'>
+                    <!-- timeline icon -->
+                    <img [src]='harvest' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class='timelineLi' *ngIf='item.type=="fertilize"'>
+                    <!-- timeline icon -->
+                    <img [src]='fertilize' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+                <li class='timelineLi' *ngIf='item.type=="rule"'>
+                    <!-- timeline icon -->
+                    <img [src]='rule' class="img-circle">
+                    <div class="timeline-item time">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{item.hour}}</span>
+
+                        <h3 class="timeline-header"><a>{{item.title}}</a></h3>
+
+                        <div class="timeline-body">
+                            {{item.description}}
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+
+            </ul>
+
+
+            <!-- timeline end -->
+            <ul class="timeline">
+                <!-- timeline item -->
+                <li class="time-label">
+                    <i class="fa fa-clock-o" style="font-size:18pt;"></i>
+                </li>
+                <!-- END timeline item -->
+
+            </ul>
+
+        </section>
+
+    </div>
+</body>

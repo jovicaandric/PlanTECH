@@ -1,0 +1,137 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"job-req"|translate}}</h1>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div *ngIf='jobRequests.length' style="overflow-x:auto;">
+      <table class="table table-striped table-responsive" [mfData]="jobRequests" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="firstname">{{ "workersName" | translate }}</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="username">{{ "workersUsername" | translate }}</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="email">{{ "workersEmail" | translate }}</mfDefaultSorter>
+            </th>
+            <th>
+              {{ "message" | translate }}
+            </th>
+            <th style="width: 10%">
+              {{"options"|translate}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let offer of mf.data">
+
+            <td>{{offer.firstname + " " + offer.lastname}}</td>
+            <td>{{offer.username}}</td>
+            <td>{{offer.email}}</td>
+            <td>{{offer.message}}</td>
+            <td>
+              <span class="fa fa-check text-success" style="cursor:pointer;" title="{{ 'offerAccept' | translate }}" data-toggle="modal"
+                data-target="#myModal"></span>&nbsp;
+
+              <!--modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">{{'choosePlantage' | translate}}</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="!plantages.length" class="message-container">
+                        <div class="message">
+                          <i class="fa fa-leaf" style="font-size: 92pt;"></i>
+                          <p class="text-muted" style="font-size: 16pt">You don't have any plantages. Please add plantages first</p>
+
+                        </div>
+                      </div>
+                      <div class="row" *ngIf='plantages.length > 0' style="padding:0px 40px 0px 40px">
+                        <div class="col-sm-12">
+                          <div class="checkbox default" style="margin-left:5px;">
+                            <input type="checkbox" (change)='selectAll($event)'>
+                            <label style="color:black">Sellect all</label>
+                          </div>
+                          <table class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th>{{'name'|translate}}</th>
+                                <th>{{'allow'|translate}}</th>
+                                <th  *ngIf='showHead==1 || selectAllC==true'>Choose permissions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor='let plantage of plantages'>
+                                <td>{{plantage.name}}</td>
+
+                                <td>
+                                  <div class="checkbox default">
+                                    <input #checkBox type="checkbox" (change)="updatePlantageCheck(plantage, $event); showHead=!showHead" [checked]='selectAllC==true'>
+                                    <label></label>
+                                  </div>
+                                </td>
+                                <!--  <td [hidden]='checkBox.checked' *ngFor='let permission of permissions'><input type="checkbox" 
+                                                  class="minimal-red" [(ngModel)]='d1'>{{permission.title}}</td>-->
+                                <td [hidden]='!checkBox.checked'>
+                                  <div *ngFor="let permission of permissions" class="checkbox default">
+                                    <input id='{{plantage.name}}check{{permission.id}}' type="checkbox" value="p{{permission.id}}" (change)="updateCheckedOptions(permission, plantage, $event)"
+                                    [checked]='selectAllC==true' />
+                                    <label for="{{plantage.name}}check{{permission.id}}">{{permission.title}}</label>
+                                  </div>
+
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="notice notice-warning">
+                            <strong>Warnning</strong> &nbsp;
+                            <p class="inline" #warn>{{warnning}}</p>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                    <div class="modal-footer" *ngIf='plantages.length > 0'>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">{{'cancel'|translate}}</button>
+                      <button type="button" (click)='acceptReq(offer)' class="btn btn-primary" data-dismiss="modal">{{'acceptRequest'|translate}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- modal-end-->
+
+              <span class="fa fa-ban text-danger" (click)=refuseRequest(offer.Id) style="cursor:pointer;" title="{{ 'rejectOffer' | translate }}"></span>&nbsp;
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div *ngIf="!jobRequests.length" class="message-container">
+      <div class="message">
+        <i class="fa fa-user" style="font-size: 92pt;"></i>
+        <p class="text-muted" style="font-size: 16pt">{{ "jobRequestsText1" | translate }} <span><a [routerLink]="['/find-work']">{{ "noJobOffersHere" | translate }}</a></span>          .</p>
+      </div>
+    </div>
+
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

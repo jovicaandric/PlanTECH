@@ -1,0 +1,371 @@
+<!--<app-control-sidebar></app-control-sidebar>-->
+<header class="main-header">
+
+  <!-- Logo -->
+  <a *ngIf="user.Role!='Admin'" [routerLink]='["/index"]' class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><b>P</b>T</span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><b>Plan</b>TECH</span>
+  </a>
+  <a *ngIf="user.Role=='Admin'" [routerLink]='["/admin/all-users"]' class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><b>P</b>T</span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><b>Plan</b>TECH</span>
+  </a>
+
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar">
+    <!-- Sidebar toggle button-->
+    <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- Messages: style can be found in dropdown.less-->
+
+        <li class="dropdown messages-menu">
+          <a class="dropdown-toggle" data-toggle="dropdown" (click)='updateNotifications()'>
+            <i class="fa fa-bell-o fa-lg"></i>
+            <span class="label label-danger" *ngIf='unseenNotif'>{{unseenNotif}}</span>
+          </a>
+          <ul class="dropdown-menu">
+
+
+            <!-- NOTIFIKACIJE -->
+
+            <li class="header">{{"you-have" | translate}} {{unseenNotif}} {{"new-not" | translate}}</li>
+            <li *ngIf='notifications.length'>
+              <!-- inner menu: contains the actual data -->
+              <ul class="menu">
+                <li *ngFor="let item of notifications;let i=index;" class="mess">
+                  <!-- start message -->
+                  <ng-container *ngIf="i<50">
+                    <a *ngIf='item.type=="job-offer"' [routerLink]='"/job-offers"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='job' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="job-request"' [routerLink]='"/job-requests"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='job' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+
+                    <a *ngIf='item.type=="job-offer-accepted"' [routerLink]='"/my-employees"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='job' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="billing"' [routerLink]='"/admin/owner-requests"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='billing' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="job-request-accepted"' [routerLink]='"/my-employers"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='job' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="reject"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='reject' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="accept"' (click)='reload();' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='accept' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="watering"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='watering' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="rain"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='rain' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="fertilize"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='fertilize' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="harvest"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='harvest' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="cut"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='cut' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                    <a *ngIf='item.type=="rule"' data-toggle="tooltip" data-placement="left" title="{{item.description}}">
+                      <div class="pull-left">
+                        <img [src]='rule' class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{item.title}}
+                        <small style="width:50px;height:22px;"><i class="fa fa-clock-o"></i>  
+                        <span class="pull-right">{{item.date}}</span> <br> <span class="pull-right">{{item.hour}}</span>
+                      </small>
+                      </h4>
+                      <p>{{item.shortDesc}}
+                        <small *ngIf="!item.seen" class="pull-right seen"><i class="fa fa-circle"></i></small>
+                      </p>
+                    </a>
+                  </ng-container>
+                </li>
+
+                <!-- end message -->
+
+              </ul>
+            </li>
+            <li *ngIf='notifications.length' class="footer"><a [routerLink]="['/notifications']">{{ "seeAllNot" | translate }}</a></li>
+          </ul>
+        </li>
+
+
+
+        <!-- PORUKE 
+
+        <li class="dropdown messages-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-envelope-o"></i>
+            <span class="label label-danger">3</span>
+          </a>
+          <ul class="dropdown-menu">        
+
+            <li class="header">You have 3 messages</li>
+            <li>
+              
+              <ul class="menu">
+                <li class="mess">
+                  
+                  <a href="#">
+                    <div class="pull-left">
+                      <img [src]='avatar' class="img-circle" alt="User Image">
+                    </div>
+                    <h4>
+                      Jovica Andric
+                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                    </h4>
+                    <p>Water plantage 2 please.</p>
+                  </a>
+                </li>
+              
+                <li class="mess">
+                  <a href="#">
+                    <div class="pull-left">
+                      <img [src]='avatar' class="img-circle" alt="User Image">
+                    </div>
+                    <h4>
+                      Markus Leptirijan
+                      <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                    </h4>
+                    <p>Neka poruka.</p>
+                  </a>
+                </li>
+                <li class="mess">
+                  <a href="#">
+                    <div class="pull-left">
+                      <img [src]='avatar' class="img-circle" alt="User Image">
+                    </div>
+                    <h4>
+                      Radovan Milovanovic
+                      <small><i class="fa fa-clock-o"></i> Today</small>
+                    </h4>
+                    <p>Poruka poruka.</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="footer"><a href="#">See All Messages</a></li>
+          </ul>
+        </li-->
+
+
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <!--  <span class='user-image' style='border:1px solid lightgray;border-radius:100%;overflow: hidden;width:27px; height:27px'><img src="{{userAvatar}}" style='position: relative;'></span>-->
+ <img [src]='userAvatar' class="user-image" alt="User Image">
+            <span class="hidden-xs">{{user.Firstname+" "+user.Lastname}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header" [routerLink]='["/user-profile"]'>
+              <div class='img-responsive' style='border:2px solid lightgray;border-radius:100%;overflow: hidden;width:80px; height:80px;margin:auto'><img [src]='userAvatar' style='position: relative; 
+    '></div>
+              <p>
+                {{user.Firstname+" "+user.Lastname}}
+                <small>{{"membersince" | translate}} {{toDateTime(user.RegDate/1000)}}</small>
+              </p>
+            </li>
+            <!-- Menu Body -->
+            <!--
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                
+              </li> -->
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <a class="btn btn-default btn-flat" [routerLink]="['/user-profile']">{{"profile" | translate}}</a>
+              </div>
+              <div class="pull-right">
+                <a class="btn btn-default btn-flat" [routerLink]='["/home"]' (click)="onLogOut()">{{ "logout" | translate }}</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <!-- MAPA -->
+        <!--<li *ngIf='user.Role=="User"'>
+          <a class="globe" [routerLink]='["/map"]'>
+            <i class="fa fa-globe" style="font-size:22px"></i>
+          </a>
+        </li>-->
+        <li *ngIf='user.Role=="User"'>
+          <a [routerLink]='["/introduction"]'>
+            <i class="fa fa-info" style="font-size:19px"></i>
+          </a>
+        </li>
+        <!-- JEZIK -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">{{languageInCookie.toUpperCase()}}<span class="caret"></span></a>
+          <div class="list-group" class="dropdown-menu" id="lang">
+            <button type="button" class="list-group-item" (click)="changeLang('en')">{{ "en" | translate}}</button>
+            <button type="button" class="list-group-item" (click)="changeLang('srb')">{{ "srb" | translate}}</button>
+          </div>
+        </li>
+        <!-- Control Sidebar Toggle Button -->
+        <li>
+          <a data-toggle="control-sidebar" data-target="#controlSide"><i class="fa fa-gears"></i></a>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
+</header>

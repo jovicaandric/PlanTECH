@@ -1,0 +1,11 @@
+Otvoriti cmd u root folderu projekta, pokrenuti komandu npm install da se instaliraju node_modules, zatim u cmd otkucati komandu nmp start 
+i to je to :D pri promeni koda bilo serverskog bilo klijentskog projekat se sam rebuilduje potrebno je samo refreshovati browser
+ponekad je pozeljno prekinuti izvrsavanje i ponovo otkucati npm start
+
+Za mongo:
+
+Skinuti i instalirati mongoDB
+Otvoriti cmd i pokrenuti komandu PATH %PATH%;“C:\Program Files\MongoDB\Server\3.4\bin“
+Pre pokretanja projekta otvoriti cmd i pokrenuti komandu mongod putanjaDoProjekta/Database/mongo
+pre komitovanja odraditi dump komadom mongodump --db plantech
+posle updatea odraditi mongorestore --db plantech putanja do dump fajla

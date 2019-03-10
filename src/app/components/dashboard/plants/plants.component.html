@@ -1,0 +1,229 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"plants" | translate}}</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="input-group">
+      <input type="text" (keyup)='filter()' name="search" class="form-control" [(ngModel)]="search" required #searchField="ngModel"
+        placeholder="{{'search'|translate}}">
+      <span class="input-group-addon"><i class="fa fa-search"></i></span>
+
+    </div>
+
+    <button type="button" *ngIf="isOwner" (click)="newPlant.open()" class="btn newPlant"><i class='fa fa-plus' ></i>&nbsp;{{"addplant"|translate}}</button>
+    <table class="table table-striped table-responsive" [mfData]="plants" #mf="mfDataTable" [mfRowsOnPage]="15">
+      <thead>
+        <tr>
+          <th style="width: 15%">
+            <mfDefaultSorter by="CategoryName">{{"category"|translate}}</mfDefaultSorter>
+          </th>
+          <th style="width: 15%">
+            <mfDefaultSorter by="PlantName">{{"new plant"|translate}}</mfDefaultSorter>
+          </th>
+          <th style="width: 15%">
+            <mfDefaultSorter by="SpecieName">{{"specia"|translate}}</mfDefaultSorter>
+          </th>
+          <th style="width: 25%">
+            {{"description"|translate}}
+          </th>
+          <th style="width: 20%">
+            <mfDefaultSorter by="SeedManufacturerName">{{"seedManufacturer"|translate}}</mfDefaultSorter>
+          </th>
+          <th style="width: 10%">
+            {{"options"|translate}}
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of mf.data;let i=index">
+        <tr class="data-row">
+          <td>{{item.CategoryName}}</td>
+          <td><a (click)="showDetails.open()">{{item.PlantName}}</a></td>
+          <td>{{item.SpecieName}}</td>
+          <td></td>
+          <td>{{item.SeedManufacturerName}}</td>
+          <td>
+            <span *ngIf="item.Owner!=null" class="fa fa-trash fa-lg" style="cursor:pointer;color:#d9534f" (click)="deletePlant(item.SpecieId)"></span>
+            <span class="fa fa-sliders fa-lg" style="cursor:pointer;color:green" (click)="openRuleForm(i);"></span>
+          </td>
+        </tr>
+        <tr *ngIf="view&&selectedIndex==i" [@enterAnimation]>
+
+          <td colspan="6">
+            <tabset [pills]="false" (onSelect)="changeCt($event)">
+              <tab *ngFor="let phase of item.Phases" title="{{phase.PhaseName}}">
+                <table class="rulesTable" style="width:100%;position:relative;padding:20px; ">
+                  <tr>
+                    <td colspan="6">
+                      <h3>Optimalne vrednosti za uzgoj {{item.PlantName}} u fenofazi {{phase.PhaseName}}</h3>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Poljski vodni kapacitet</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.GroundHumidity[0]" name="slider" [config]="groundHumidityConfig" [tooltips]="[true, true]"
+                              [(ngModel)]="phase.Rules.GroundHumidity"></nouislider>
+                            <a *ngIf="!phase.Rules.GroundHumidity[0]" class="text-success" (click)="addGroundHumidityRule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za PVK</a>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Kiselost(Ph)</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.PH[0]" name="slider " [config]="phConfig" [tooltips]="[true, true]" [(ngModel)]="phase.Rules.PH"></nouislider>
+                            <a *ngIf="!phase.Rules.PH[0]" class="text-success" (click)="addPhRule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za Ph</a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left;">Kalcijum-karbonat(CaCo3)</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.CACO3[0]!=null" name="slider " [config]="caco3Config" [tooltips]="[ true, true ]" [(ngModel)]="phase.Rules.CACO3"></nouislider>
+                            <a *ngIf="phase.Rules.CACO3[0]==null" class="text-success" (click)="addCaCO3Rule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za CaCO3</a>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Azot(N)</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.N[0]" name="slider " [config]="nConfig" [tooltips]="[ true, true ]" [(ngModel)]="phase.Rules.N"></nouislider>
+                            <a *ngIf="!phase.Rules.N[0]" class="text-success" (click)="addNRule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za N</a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Kalijum(K2O)</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.K2O[0]" name="slider " [config]="k2oConfig" [tooltips]="[ true, true ]" [(ngModel)]="phase.Rules.K2O"></nouislider>
+                            <a *ngIf="!phase.Rules.K2O[0]" class="text-success" (click)="addK2ORule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za K2O</a>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Fosfor(P2O5)</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.P2O5[0]" name="slider " [config]="k2oConfig" [tooltips]="[ true, true ]" [(ngModel)]="phase.Rules.P2O5"></nouislider>
+                            <a *ngIf="!phase.Rules.P2O5[0]" class="text-success" (click)="addP2O5Rule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za P2O5</a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Temperatura zemljišta</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.GroundTemp[0]" name="slider " [config]="groundTemp" [tooltips]="[ true, true ] " [(ngModel)]="phase.Rules.GroundTemp"></nouislider>
+                            <a *ngIf="!phase.Rules.GroundTemp[0]" class="text-success" (click)="addGroundTempRule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za temperaturu zemljišta</a>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="col-sm-2">
+                            <th style="width: 5%;text-align:left; ">Vlažnost vazduha</th>
+                          </div>
+                          <div class="col-sm-10">
+                            <nouislider *ngIf="phase.Rules.AirHumidity[0]" name="slider " [config]="airHumidityConfig" [tooltips]="[true, true]" [(ngModel)]="phase.Rules.AirHumidity"></nouislider>
+                            <a *ngIf="!phase.Rules.AirHumidity[0]" class="text-success" (click)="addAirHumidityRule(item);"><i class="fa fa-plus"></i> &nbsp;Dodajte pravilo za vlažnost vazduha</a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </tab>
+            </tabset>
+            <hr>
+            <div class="row">
+              <div class="col-sm-offset-10 col-sm-2">
+                <button class="btn btn-primary" (click)="saveRule(item)"><i class="fa fa-save"></i>&nbsp;{{'save'|translate}}</button>
+                <button class="btn btn-danger" (click)="cancelRule(i)"><i class="fa fa-times"></i>&nbsp;{{'ponisti'|translate}}</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <modal #showDetails id="newRuleModal" title="{{'plant-details' | translate}}" modalClass="modal-lg" [closeOnOutsideClick]="true">
+          <modal-content>
+            <div [innerHtml]='item.Details'></div>
+          </modal-content>
+        </modal>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6 ">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,15,25] "></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </section>
+  <!-- /.content -->
+  <ng2-toasty></ng2-toasty>
+</div>
+<!-- /.content-wrapper -->
+
+<form class="form-horizontal" #addnewplant="ngForm">
+  <modal #newPlant id="newPlantModal " title="{{'add-plant' | translate}}" modalClass="modal-sm " [closeOnOutsideClick]="false ">
+    <modal-content>
+
+      <div class="form-group ">
+        <label class="control-label col-sm-4 " style="text-align:left; ">{{"new plant category"|translate}}</label>
+        <div class="col-sm-8 ">
+          <select required class="form-control " name="category " [(ngModel)]="category ">
+            <option *ngFor="let category of categories " value='{{category.id}}'>{{category.text}}</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="form-group ">
+        <label class="control-label col-sm-4 " style="text-align:left; ">{{"new plant"|translate}}</label>
+        <div class="col-sm-8 ">
+          <input required class="form-control " name="plant " [(ngModel)]="plant " />
+
+        </div>
+      </div>
+      <div class="form-group ">
+        <label class="control-label col-sm-4 " style="text-align:left; ">{{"specie"|translate}}</label>
+        <div class="col-sm-8 ">
+          <input required class="form-control " name="specie " [(ngModel)]="specie " />
+        </div>
+      </div>
+      <div class="form-group ">
+        <label class="control-label col-sm-4 " style="text-align:left; ">{{"seedmanufacturer"|translate}}</label>
+        <div class="col-sm-8 ">
+          <input required class="form-control " name="seed " [(ngModel)]="seedManufacturer " />
+        </div>
+      </div>
+    </modal-content>
+
+    <modal-footer>
+      <button [disabled]="!addnewplant.form.valid" class="btn btn-primary " (click)="save();newPlant.close() ">{{ "plantageSave" | translate }}</button>
+    </modal-footer>
+  </modal>
+</form>

@@ -1,0 +1,11 @@
+@media only screen and (max-width: 414px) {
+   /* .mapa {
+        visibility: hidden;
+        height: 0px;
+        width: 0px;
+    }*/
+}
+
+.info {
+        overflow-y: auto;
+}

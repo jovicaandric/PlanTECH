@@ -1,0 +1,14 @@
+<div class="content">
+  <div class="center">
+    <div class="message">
+      <div class="row">
+        <i class="fa fa-user-times" style="font-size:96pt;" aria-hidden="true"></i>
+        <!--p style="font-size:64pt;color:white;display:inline-block;">(._.)</p--> 
+        <p style="font-size:96pt;display:inline-block;padding-left:20px;"> 403</p>
+      </div>
+      <h2 style="margin-top:15px;">{{"nopermission" | translate}}</h2>
+    </div>
+    <button *ngIf='user' class="btn btn-default" [routerLink]="['/index']" >{{"gotoindex" | translate}}</button>
+    <button *ngIf='!user' class="btn btn-default" [routerLink]="['/login']" >{{"gotologin" | translate}}</button>
+  </div>
+</div>

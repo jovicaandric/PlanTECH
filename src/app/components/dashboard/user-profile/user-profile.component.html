@@ -1,0 +1,278 @@
+<app-topnav></app-topnav>
+<div class="container-fluid">
+  <div class="row" style="background-color:#ECF0F5">
+
+    <app-sidebar *ngIf='userCurrent.Role=="User"'></app-sidebar>
+    <app-admin-sidebar *ngIf='userCurrent.Role=="Admin"'></app-admin-sidebar>
+    <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content-header">
+        <h1 class="page-header">{{ 'General Account Settings' | translate}}</h1>
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+              <div class="box-body box-profile">
+                <div class='img-responsive' style='border:2px solid lightgray;border-radius:100%;overflow: hidden;width:150px; height:150px;margin:auto'><img src='{{userAvatar}}' style='position: relative; 
+    '></div>
+
+                <h3 class="profile-username text-center">{{userCurrent.Firstname}} {{userCurrent.Lastname}}</h3>
+                <p class="text-muted text-center">{{userCurrent.Role | translate}}</p>
+                <!--<a href="#" class="btn btn-primary btn-block">{{'Change image'|translate}}</a>-->
+                <div class="btn btn-primary btn-block fileUpload">
+                  <span>{{'Change image'|translate}}</span>
+                  <input type="file" class='upload' name="image" (change)='uploadFile($event)' />
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+            <!-- About Me Box -->
+
+            <!-- /.box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+
+
+            <!-- IME I PREZIME -->
+            <div class='row'>
+              <div class="col-md-9">
+                <div class="box box-default collapsed-box">
+                  <div class="box-header with-border">
+                    <div class='row'>
+                      <div class='col-sm-4'>
+                        <h3 class="box-title" style="margin-top: 5%;">{{ 'name' |translate}}</h3>
+                      </div>
+                      <div class='col-sm-4' style="margin-top: 1%;">
+                        <h6 class='userData'>{{userCurrent.Firstname}} {{userCurrent.Lastname}}</h6>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>&nbsp;{{'edit' | translate}}
+                </button>
+                        </div>
+                      </div>
+                      <!-- /.box-tools -->
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <form class="login-form" [formGroup]="editFormName" #editProfile="ngForm" (ngSubmit)="onSubmitName()" novalidate>
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" formControlName="firstname" required [(ngModel)]='user.firstname' name='firstname'>
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.firstname">
+                          {{ formErrors.firstname|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='row' style="margin-top: 9px">
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" formControlName="lastname" required [(ngModel)]='user.lastname' name='lastname'>
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.lastname">
+                          {{ formErrors.lastname|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='row'>
+                        <div class="col-xs-5">
+
+                          <button type="submit" class="btn btn-primary" [disabled]="!editProfile.form.valid">{{ 'save' | translate }}</button>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- =========================================================== -->
+            <div class="row">
+              <!-- KORISNICKO IME -->
+              <div class="col-md-9">
+                <div class="box box-default collapsed-box">
+                  <div class="box-header with-border">
+                    <div class='row'>
+                      <div class='col-sm-4'>
+                        <h3 class="box-title" style="margin-top: 5%;">{{ 'username' | translate }}</h3>
+                      </div>
+                      <div class='col-sm-4' style="margin-top: 1%;">
+                        <h6 class='userData'>{{userCurrent.Username}}</h6>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>&nbsp; {{'edit' | translate}}
+                </button>
+                        </div>
+                      </div>
+                      <!-- /.box-tools -->
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <form class="login-form" [formGroup]="editFormUsername" #editProfileUsername="ngForm" (ngSubmit)="onSubmitUsername()" novalidate>
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" formControlName="username" required [(ngModel)]='user.username' name='username'>
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.username">
+                          {{ formErrors.username|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='row' style="margin-top:5px;">
+                        <div class="col-xs-5">
+
+                          <button type="submit" class="btn btn-primary" [disabled]="!editProfileUsername.form.valid">{{ 'save' | translate }}</button>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+              <!-- EMAIL -->
+              <div class="col-md-9">
+                <div class="box box-default collapsed-box">
+                  <div class="box-header with-border">
+                    <div class='row'>
+                      <div class='col-sm-4'>
+                        <h3 class="box-title" style="margin-top: 5%;">Email</h3>
+                      </div>
+                      <div class='col-sm-4' style="margin-top: 1%;">
+                        <h6 class='userData'>{{userCurrent.Email}}</h6>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>&nbsp;{{'edit' | translate}}
+                </button>
+                        </div>
+                      </div>
+                      <!-- /.box-tools -->
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <form class="login-form" [formGroup]="editFormEmail" #editProfileEmail="ngForm" (ngSubmit)="onSubmitEmail()" novalidate>
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" formControlName="email" required [(ngModel)]='user.email' name='email'>
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.email">
+                          {{ formErrors.email|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='row' style="margin-top:5px;">
+                        <div class="col-xs-5">
+
+                          <button type="submit" class="btn btn-primary" [disabled]="!editProfileEmail.form.valid">{{ 'save' | translate }}</button>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+            <!-- /.row -->
+
+
+            <div class="row">
+              <!-- PASSWORD -->
+              <div class="col-md-9">
+                <div class="box box-default collapsed-box">
+                  <div class="box-header with-border">
+                    <div class='row'>
+                      <div class='col-sm-4'>
+                        <h3 class="box-title" style="margin-top: 5%;">{{ 'password' | translate}}</h3>
+                      </div>
+                      <div class='col-sm-4' style="margin-top: 1%;">
+                        <h6 class='userData'></h6>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>&nbsp;{{'edit' | translate}}
+                </button>
+                        </div>
+                      </div>
+                      <!-- /.box-tools -->
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <form class="login-form" [formGroup]="editFormPassword" #editProfilePassword="ngForm" (ngSubmit)="onSubmitPassword()" novalidate>
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <input type="password" class="form-control" formControlName="password" required [(ngModel)]='user.password' name='password'
+                            placeholder="new password">
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.password">
+                          {{ formErrors.password|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <input type="password" class="form-control" formControlName="confirmPassword" required [(ngModel)]='user.confirmPassword'
+                            name='confirmPassword' placeholder="confirm password">
+                          <div class='holdsSmall'>
+                            <small class="text-danger" *ngIf="formErrors.confirmPassword">
+                          {{ formErrors.confirmPassword|translate}}
+                    </small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='row' style="margin-top:5px;">
+                        <div class="col-xs-5">
+
+                          <button type="submit" class="btn btn-primary" [disabled]="!editProfilePassword.form.valid">{{ 'save' | translate }}</button>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- =========================================================== -->
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+
+      </section>
+      <!-- /.content -->
+    </div>
+  </div>
+</div>
+<ng2-toasty></ng2-toasty>

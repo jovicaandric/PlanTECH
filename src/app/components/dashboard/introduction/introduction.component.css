@@ -1,0 +1,40 @@
+.content-wrapper {
+    height: 100%;
+}
+
+.card1 {
+    border-left: 8px solid #00A65A;
+    
+}
+
+.card2 {
+    border-left: 8px solid #605CA8;
+}
+
+.card3 {
+    border-left: 8px solid #F39C12;
+}
+
+.card4 {
+    border-left: 8px solid #3C8DBC;
+}
+
+.card5 {
+    border-left: 8px solid #DD4B39;
+}
+
+
+.card1, .card2, .card3, .card4, .card5, .first {
+    border-radius: 0px; 
+    width: 86%;
+    margin-top:20px;
+    border-top: 0px;
+    
+}
+
+.naslov {
+    color: #1A2226;
+    font-size: 32px;
+    margin-bottom: 0px;
+}
+

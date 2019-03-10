@@ -1,0 +1,354 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"plantage"|translate}}</h1>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div *ngIf="plantages&&plantages.length>0">
+      <div style="overflow-x:auto;">
+
+        <button class="btn btn-primary" [disabled]="!mapView" (click)="mapView=!mapView"><i class="fa fa-list"></i>&nbsp;Tabelarni prikaz</button>
+        <button class="btn btn-primary" [disabled]="mapView" (click)="mapView=!mapView"><i class="fa fa-map"></i>&nbsp;Prikaz na mapi</button>
+
+        <app-map *ngIf="mapView"></app-map>
+        <div *ngIf="!mapView">
+          <button type="button" *ngIf="isOwner&&plantages.length<maxPlantages" (click)="newPlantage.open(); isValid=0" class="btn newPlantage"><i class='fa fa-plus' ></i>&nbsp;{{"addnewplantage"|translate}}</button>
+          <button type="button" *ngIf="isOwner&&plantages.length==maxPlantages" (click)="newPlantage.open(); isValid=0" class="btn newPlantage" disabled>
+              <i class='fa fa-plus' ></i>&nbsp;{{"addnewplantage"|translate}}
+          </button>
+          <table class="table " (mouseleave)="hoveredIndex=null" [mfData]="plantages" #mf="mfDataTable" [mfRowsOnPage]="5" style="overflow-x:auto;">
+            <thead>
+              <tr>
+                <th style="width:60px">
+                  &nbsp;
+                </th>
+                <th>
+                  <mfDefaultSorter by="title"> {{ "plantagetitle" | translate }}</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="owner.firstname"> {{ "owner" | translate }}</mfDefaultSorter>
+                </th>
+                <th>
+                  {{ "new plant" | translate }}
+                </th>
+                <th>
+                  {{ "permissions" | translate }}
+                </th>
+                <th style="width: 10%">
+                  {{"options"|translate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let plant of mf.data;let p=index;">
+              <tr (mouseenter)="hoveredIndex=p" [class.warning]="plant.alerts&&plant.alerts.rows.length>0">
+                <td>
+                  <span *ngIf="hoveredIndex==p&&hasPermission(plant,'4')" class="glyphicon glyphicon-trash" (click)="deletePlantage(plant)"
+                    style='color:#d9534f;cursor:pointer;'></span>&nbsp;
+                  <span *ngIf="hoveredIndex==p&&hasPermission(plant,'4')" class="glyphicon glyphicon-pencil" (click)="editPlantage.open()"
+                    style='color:#428bca;cursor:pointer;'></span>&nbsp;
+                </td>
+                <td>
+                  {{plant.title}}&nbsp;
+
+                  <!--EDIT MODAL-->
+                  <modal #editPlantage data-toggle="tooltip" data-placement="top" title="{{'updateplantage'|translate}}" modalClass="modal-lg"
+                    [closeOnOutsideClick]="false" (onOpen)="showMapForEdit(plant)" (onClose)="onClose()">
+                    <modal-content>
+                      <div *ngIf="mapa" id="mapForEdit" style="height:500px;"></div>
+                      <div *ngIf="!mapa">
+                        <form class="form-horizontal ">
+                          <div class="form-group ">
+                            <label class="control-label col-sm-2 ">{{"plantagetitle"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <input class="form-control" id="plantageTitle" name="title" [(ngModel)]="plant.title" placeholder='{{"plantagetitle"|translate}}'
+                                value='{{plant.title}}'>
+                            </div>
+                          </div>
+
+                          <div class="form-group ">
+                            <label class="control-label col-sm-2 ">{{"new plant category"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <ng-select #category [allowClear]="true " [items]="categories" (selected)="selectedCategory($event)" (removed)="removedCategory($event) "
+                                (typed)="typedCategory($event) " placeholder='{{"category"|translate}}'>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="form-group " [hidden]='hiddenPlant'>
+                            <label class="control-label col-sm-2 ">{{"new plant"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <ng-select [allowClear]="true" [items]="plants" (selected)="selectedPlant($event)" (removed)="removedPlant($event)" (typed)="typedPlant($event)"
+                                placeholder="{{ 'noPlantSelected' | translate }}">
+                              </ng-select>
+                              <p *ngIf="plantWarning" class="text-warning"><i class="fa fa-exclamation-circle"></i>&nbsp;{{plantWarning}}</p>
+                              <p *ngIf="altitudeWarning" class="text-warning"><i class="fa fa-exclamation-circle"></i>&nbsp;{{altitudeWarning}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group " [hidden]='hiddenSpecie'>
+                            <label class="control-label col-sm-2 ">{{"specie"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <ng-select [allowClear]="true" [items]="species" (selected)="selectedSpecie($event)" (removed)="removedSpecie($event)" (typed)="typedSpecie($event)"
+                                placeholder="{{ 'noSpecieSelected' | translate }}">
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="form-group " [hidden]='hiddenSeed'>
+                            <label class="control-label col-sm-2 ">{{"seedmanufacturer"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <ng-select [allowClear]="true" [items]="seeds " (selected)="selectedSeed($event)" (removed)="removedSeed($event)" (typed)="typedSeed($event)"
+                                placeholder="{{ 'noSeedManuf' | translate }}">
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="form-group " [hidden]='hiddenDate'>
+                            <label class="control-label col-sm-2 ">{{"plantagedate"|translate}}</label>
+                            <div class="col-sm-8 ">
+                              <my-date-picker name="mydate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)" required></my-date-picker>
+                            </div>
+                          </div>
+                          <div class="newPlant" [hidden]='hiddenNew'>
+                            <span class='col-sm-offset-2 text-primary' style='cursor:pointer;' (click)='addAnotherPlant();'><span class="glyphicon glyphicon-plus"></span>{{"addnewplant"|translate}}
+                            </span>
+                          </div>
+                          <div class='form-group addedPlants' *ngIf='plant.plants.length>0'>
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-8 ">
+                              <table class='table table-striped table-condensed' style="font-size:12px; ">
+                                <tr>
+                                  <th>Category</th>
+                                  <th>{{ "new plant" | translate }}</th>
+                                  <th>{{ "specie" | translate }}</th>
+                                  <th>{{ "seedmanufacturer" | translate }}
+                                  </th>
+                                  <th>{{ "delete" | translate }}</th>
+                                </tr>
+                                <tr *ngFor='let planted of plant.plants;let i=index'>
+                                  <td>{{planted.category.text}}</td>
+                                  <td>{{planted.plant.text}}</td>
+                                  <td>{{planted.specie.text}}</td>
+                                  <td>{{planted.seedManufacturer.text}}</td>
+                                  <td><span class='glyphicon glyphicon-trash text-danger' style='cursor:pointer;' (click)='removeAddedPlantEdit(p,i)'></span></td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </modal-content>
+
+                    <modal-footer>
+                      <a *ngIf="!mapa" [routerLink]="['/plants']" class="text-default" style="float:left;margin-left:10px;"><i class="fa fa-question-circle"></i>&nbsp;Niste pronašli željenu biljku</a>
+                      <button *ngIf="mapa" class="btn btn-default" (click)="next()">{{ "nextPlantage" | translate }} &gt;</button>
+                      <button [disabled]="addedPlants.length==0&&hiddenNew" *ngIf="!mapa" class="btn btn-primary" (click)="updatePlantage(plant);editPlantage.close();">{{ "plantageSave" | translate }}</button>
+                    </modal-footer>
+
+                  </modal>
+                  <!--END OF EDIT MODAL-->
+
+                </td>
+                <td>{{plant.owner.firstname + " " + plant.owner.lastname}}</td>
+                <td>
+                  <table class="table table-condensed" [mfData]="plant.plants" #mf="mfDataTable" border="0" style="background: transparent;">
+                    <thead>
+                      <th style="width: 20%">
+                        <mfDefaultSorter by="category.text">
+                          {{ "category" | translate }}
+                        </mfDefaultSorter>
+                      </th>
+                      <th style="width: 20%">
+                        <mfDefaultSorter by="plant.text">
+                          {{ "new plant" | translate }}
+                        </mfDefaultSorter>
+                      </th>
+                      <th style="width: 20%">
+                        <mfDefaultSorter by="specie.text">
+                          {{ "specie" | translate }}
+                        </mfDefaultSorter>
+                      </th>
+                      <th style="width: 30%">
+                        <mfDefaultSorter by="seedManufacturer.text">
+                          {{ "seedmanufacturer" | translate }}
+                        </mfDefaultSorter>
+                      </th>
+                      <th style="width: 10%">
+                        <mfDefaultSorter by="plantDate">
+                          {{ "plantDate" | translate }}
+                        </mfDefaultSorter>
+                      </th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pl of mf.data">
+                        <td>{{pl.category.text}}</td>
+                        <td>{{pl.plant.text}}</td>
+                        <td>{{pl.specie.text}}</td>
+                        <td>{{pl.seedManufacturer.text}}</td>
+                        <td>{{dateToString(pl.plantDate)}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td>
+                  <tr *ngFor="let perm of plant.permissionsName">{{perm|translate}}</tr>
+                </td>
+                <td>
+                  <span class="fa fa-map-marker fa-lg text-danger" style="cursor:pointer" data-toggle="tooltip" data-placement="top" title="Prikaži na mapi"
+                    (click)="clickedIndex=p;view='map';"></span>&nbsp;
+                  <span *ngIf="hasPermission(plant,'3')" class="fa fa-bolt fa-lg text-primary" style="cursor:pointer" data-placement="top"
+                    data-toggle="tooltip" title="Prikaži vremensku prognozu" (click)="clickedIndex=p;view='weather';"></span>&nbsp;
+                  <span *ngIf="hasPermission(plant, '2')" class="fa fa-area-chart fa-lg text-success" style="cursor:pointer" data-toggle="tooltip"
+                    data-placement="top" title="Prikaži merenja" (click)="getMeasurementsForPlantage(plant.plantageId);clickedIndex=p;view='measurements';"></span>&nbsp;
+                  <span *ngIf="plant.alerts&&plant.alerts.rows.length>0" class="fa fa-exclamation-triangle fa-lg text-warning" style="cursor:pointer"
+                    data-toggle="tooltip" data-placement="top" title="Prikaži upozorenja" (click)="openAlert(p);"></span>
+
+                  <span>&nbsp;</span>
+                  <span [hidden]="p!=clickedIndex" class="fa fa-times-circle fa-lg text-danger" style="cursor:pointer" data-toggle="tooltip"
+                    data-placement="top" title="{{'close'|translate}}" (click)="view=null;clickedIndex=null;"></span>&nbsp;
+                </td>
+              </tr>
+              <tr *ngIf="p==clickedIndex&&view=='map'" class="mapShow" [@enterAnimation] (@enterAnimation.done)="animationDone()" (@enterAnimation.start)="animationStart()">
+                <td colspan="6" style="margin:0;padding:0">
+                  <ngui-map id="prikaz" zoom="15" center="{{getCenter(plant)}}" class="mapShow" style="position:absolute">
+                    <polygon [paths]="plant.path" [strokeColor]="'#428bca'" [strokeOpacity]="0.8" [strokeWeight]="2" [fillColor]="'#428bca'"
+                      [fillOpacity]="0.35"></polygon>
+                  </ngui-map>
+                </td>
+              </tr>
+              <tr *ngIf="p==clickedIndex&&view=='weather'" class="weatherShow" [@enterAnimation] (@enterAnimation.done)="animationDone()"
+                (@enterAnimation.start)="animationStart()">
+                <td colspan="6" style="margin:0;padding:0;">
+
+                  <app-weather-plantage [plantageId]='plant.plantageId' [latitude]='plant.path[0].lat' [longitude]='plant.path[0].lng' id="prikaz"
+                    class="weatherShow" style="position:absolute;"></app-weather-plantage>
+                </td>
+              </tr>
+              <tr *ngIf="p==clickedIndex&&view=='measurements'" class="measurerShow" [@enterAnimation] (@enterAnimation.done)="animationDone()"
+                (@enterAnimation.start)="animationStart()">
+                <td colspan="6" style="margin:0;padding:0;">
+                  <div *ngIf="measurements.length>0&&!noMeasurements" id="myDiv" style="width: 95%;"></div>
+                  <div *ngIf="noMeasurements&&measurements.length>0" style="width: 95%;margin-top:30px;">
+                    <div class="message">
+                      <i class="fa fa-area-chart " style="font-size: 92pt;"></i>
+                      <p class="text-muted" style="font-size: 16pt">{{ "noValues" | translate }}</p>
+                    </div>
+                  </div>
+                  <div *ngIf="measurements.length==0" style="width: 95%;margin-top:30px;">
+                    <div class="message">
+                      <i class="fa fa-thermometer-quarter" style="font-size: 92pt;"></i>
+                      <p class="text-muted" style="font-size: 16pt">{{ "noMeasurers" | translate }} <span><a [routerLink]="['/measurers']">{{ "ovde" | translate }}</a></span></p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                </td>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!plantages.length" class="message-container">
+      <div class="message">
+        <i class="fa fa-leaf" style="font-size: 92pt;"></i>
+        <p class="text-muted" style="font-size: 16pt">{{ "dontHaveAnyPlantages" | translate }}</p>
+        <button id="noPlantBtn" type="button" (click)="newPlantage.open()" class="btn newPlantage"><i class='fa fa-plus' ></i>&nbsp;{{"addnewplantage"|translate}}</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!--ADD NEW MODAL-->
+<form class="form-horizontal" #addnewplantage="ngForm">
+  <modal #newPlantage id="newPlantageModal" data-toggle="tooltip" data-placement="top" title="{{ 'addPlantage' | translate }}"
+    modalClass="modal-lg" [closeOnOutsideClick]="false" (onOpen)="showMap()" (onClose)="onClose()">
+    <modal-content>
+      <div *ngIf="mapa" id="map" [@slideIn]></div>
+      <div *ngIf="!mapa">
+        <div class="form-group">
+          <label class="control-label col-sm-2 ">{{"plantagetitle"|translate}}</label>
+          <div class="col-sm-6">
+            <input required class="form-control" id="plantageTitle" name="plantageTitle" [(ngModel)]="addPlantageTitle" placeholder='{{"plantagetitle"|translate}}'>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">{{"new plant category"|translate}}</label>
+          <div class="col-sm-6">
+            <ng-select #category [allowClear]="true " [items]="categories" (selected)="selectedCategory($event)" (removed)="removedCategory($event)"
+              (typed)="typedCategory($event)" placeholder='{{"category"|translate}}'>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group" *ngIf='!hiddenPlant'>
+          <label class="control-label col-sm-2 ">{{"new plant"|translate}}</label>
+          <div class="col-sm-6">
+            <ng-select [allowClear]="true" [items]="plants" (selected)="selectedPlant($event)" (removed)="removedPlant($event)" (typed)="typedPlant($event)"
+              placeholder="{{ 'noPlantSelected' | translate }}">
+            </ng-select>
+            <p *ngIf="plantWarning" class="text-warning"><i class="fa fa-exclamation-circle"></i>&nbsp;{{plantWarning}}</p>
+            <p *ngIf="altitudeWarning" class="text-warning"><i class="fa fa-exclamation-circle"></i>&nbsp;{{altitudeWarning}}</p>
+          </div>
+        </div>
+        <div class="form-group" *ngIf='!hiddenSpecie'>
+          <label class="control-label col-sm-2 ">{{"specie"|translate}}</label>
+          <div class="col-sm-6">
+            <ng-select [allowClear]="true" [items]="species" (selected)="selectedSpecie($event)" (removed)="removedSpecie($event)" (typed)="typedSpecie($event)"
+              placeholder="{{ 'noSpecieSelected' | translate }}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group" *ngIf='!hiddenSeed'>
+          <label class="control-label col-sm-2 ">{{"seedmanufacturer"|translate}}</label>
+          <div class="col-sm-6">
+            <ng-select [allowClear]="true" [items]="seeds" (selected)="selectedSeed($event)" (removed)="removedSeed($event)" (typed)="typedSeed($event)"
+              placeholder="{{ 'noSeedManuf' | translate }}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group" *ngIf='!hiddenDate'>
+          <label class="control-label col-sm-2 ">{{"plantagedate"|translate}}</label>
+          <div class="col-sm-6">
+            <my-date-picker name="mydate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"></my-date-picker>
+          </div>
+        </div>
+        <div class="newPlant" *ngIf='!hiddenNew'>
+          <span class='col-sm-offset-2 text-primary' style='cursor:pointer;' (click)='addAnotherPlant()'><span class="glyphicon glyphicon-plus"></span>{{"addnewplant"|translate}}
+          </span>
+        </div>
+        <div class='form-group addedPlants' *ngIf='addedPlants.length>0'>
+          <label class="control-label col-sm-2"></label>
+          <div class="col-sm-6">
+            <table class='table table-striped table-condensed' style="font-size:12px; ">
+              <tr>
+                <th>{{ "category" | translate }}</th>
+                <th>{{ "new plant" | translate }}</th>
+                <th>{{ "specie" | translate }}</th>
+                <th>{{ "seedmanufacturer" | translate }}</th>
+                <th>{{ "delete" | translate }}</th>
+              </tr>
+              <tr *ngFor='let plant of addedPlants;let i=index'>
+                <td>{{plant.category.text}}</td>
+                <td>{{plant.plant.text}}</td>
+                <td>{{plant.specie.text}}</td>
+                <td>{{plant.seedManufacturer.text}}</td>
+                <td><span class='glyphicon glyphicon-trash text-danger' style='cursor:pointer;' (click)='removeAddedPlant(i)'></span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </modal-content>
+
+    <modal-footer>
+      <a *ngIf="!mapa" [routerLink]="['/plants']" class="text-default" style="float:left;margin-left:10px;"><i class="fa fa-question-circle"></i>&nbsp;niste pronašli željenu biljku</a>
+      <button *ngIf="mapa" class="btn btn-default" [disabled]="plantageNew" (click)="next()">{{ "nextPlantage" | translate }} &gt;</button>
+      <button *ngIf="!mapa" [disabled]="!addnewplantage.form.valid || (addedPlants.length==0&&hiddenNew)" class="btn btn-primary"
+        (click)="save();newPlantage.close()">{{ "plantageSave" | translate }}</button>
+    </modal-footer>
+
+  </modal>
+</form>

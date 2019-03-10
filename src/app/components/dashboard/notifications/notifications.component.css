@@ -1,0 +1,33 @@
+.content-wrapper {
+    background-color: #F5F5F5;
+}
+
+body {
+    background-color: #F5F5F5;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.timeline {
+    margin-bottom: 0px;
+}
+
+.timeline-header {
+    margin-top: 15px;
+}
+
+li.timelineLi {
+    margin: 0px;
+}
+
+.timeline-body {
+    margin-bottom: 20px;
+}
+
+img {
+    position: absolute;
+    left: 18px;
+    width: 30px;
+    height: 30px;
+}

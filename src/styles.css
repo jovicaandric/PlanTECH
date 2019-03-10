@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+@import "/node_modules/nouislider/distribute/nouislider.min.css";
+
+.noUi-connect {
+    background: red !important;
+}
+
+.noUi-horizontal 
+{
+    height: 10px !important; 
+}
+.noUi-pips-horizontal 
+{
+    height: 40px !important; 
+}
+
+.noUi-connect {
+    background: green !important;
+}
+
+.noUi-tooltip{
+    font-size:12px !important;
+    padding-top:2px !important;
+    padding-bottom:2px !important;
+}
+
+.noUi-handle, .noUi-handle-lower{
+    height: 22px !important;
+    /*width:  24px !important;*/
+    margin:auto !important;
+}
+
+.progress-bar {
+    margin-bottom: 0px !important;
+    border-radius: 5px;
+    height: 10px;
+    padding: 0px;
+}
+
+div.progress {
+    height: 10px !important;
+    border-radius: 5px;
+    margin-bottom: 0px !important; 
+    width: 120px !important;
+    border: 0.25pt solid #222D32; 
+}
+
+.fc-time {
+    display: none;
+}

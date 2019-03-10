@@ -1,0 +1,86 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box precipGraph">
+            <div class="box-header with-border">
+                <h3 class="box-title">Precipitation</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                    <!--<div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                --></div>
+            </div>
+            
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-center">
+                            <strong>Prrecip probability(%)</strong>
+                        </p>
+
+                        <div class="chart">
+                            <!-- Sales Chart Canvas -->
+                            <div id="chart1">
+                                <svg></svg>
+                            </div>
+
+                        </div>
+                        <!-- /.chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-green"><i class="fa  fa-cloud"></i> {{cloudCover}}</span>
+                            <h5 class="description-header"></h5>
+                            <span class="description-text">Cloud cover</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-yellow"><i class="fa fa-road"></i> {{visibility}}</span>
+                            <h5 class="description-header"></h5>
+                            <span class="description-text">Visibility</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                   <div class="col-sm-4 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> {{pressure}}</span>
+                            <h5 class="description-header"></h5>
+                            <span class="description-text">Pressure</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->

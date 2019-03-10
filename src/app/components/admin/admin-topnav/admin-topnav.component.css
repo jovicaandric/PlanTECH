@@ -1,0 +1,29 @@
+
+.mynav {
+    border: none;
+    border-radius: 0;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    /*background-color: #3F51B5;*/
+    background-color: #4CAF50;
+    color: white;
+    border: 0;
+}
+
+.badge-notify{
+   background:#ff6666;
+   font-size: 8pt;
+   padding:2px 5px;
+   position:relative;
+   top: -10px;
+   left: -5px;
+}

@@ -1,0 +1,129 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1 style='display:inline;margin-right:20px;'>{{"measurers"|translate}}</h1>
+    <span id="controls" *ngIf='plantages' style="position:fixed;">
+            <span id="saveButton"></span>
+    <span id="cancelButton"></span>
+    </span>
+  </section>
+
+  <section class="content">
+
+    <div id="map"></div>
+    <nav class="fab">
+      <a class="fab-button" data-toggle="tooltip" data-placement="left" title="{{'addMeasurer' | translate}}" id="addNewMeasurer"><i class=" fa fa-tint"></i></a>
+      <span class="fab-button" id="fab"><i class="material-icons ">add</i></span>
+    </nav>
+  </section>
+</div>
+<!--MODAL ZA DODAVANJE NOVOG MERACA-->
+
+<form class="form-horizontal" #dodajMerac="ngForm">
+  <div class="modal fade" id="newMeasurerModal" role="dialog ">
+    <div class="modal-dialog ">
+      <div class="modal-content ">
+        <div class="modal-header ">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title ">{{"measurerinfo"|translate}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group ">
+            <label class="control-label col-sm-2 ">Url</label>
+            <div class="col-sm-8 ">
+              <input required type="text" class="form-control " id="mesurerUrl" name="measureUrl" [(ngModel)]="measurerUrl" placeholder='Url'>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">{{"measurevalue"|translate}}</label>
+            <div class="col-sm-8">
+              <select required class="form-control" required #mv name="measureValue" id="measureValue" [(ngModel)]="measureValue">
+                                <option value="Air Humidity">{{'humidityRule'|translate}}</option>
+                                <option value="Ground Humidity">{{'soil'|translate}}</option>
+                                <option value="Ph">{{"ph"|translate}}</option>
+                                <option value="CaCO3">{{'calcium'|translate}}</option>
+                                <option value="N">{{'azot'|translate}}</option>
+                                <option value="K2O">{{'kalijum'|translate}}</option>
+                                <option value="P2O5">{{'fosfor'|translate}}</option>
+                                <option value="Hummus">Humus</option>
+                                <option value="GroundTemp">{{'tempGround'|translate}}</option>
+                            </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">{{"plantage"|translate}}</label>
+            <div class="col-sm-8">
+              <div class="checkbox" *ngFor="let plantage of plantages;let i=index;">
+                <input id='{{plantage.title}}{{i}}' type="checkbox" name="ch{{i}}" [(ngModel)]="checkedPlantages[i]">
+                <label for='{{plantage.title}}{{i}}'>{{plantage.title}}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button [disabled]="!dodajMerac.form.valid" type="button" class='btn btn-primary' (click)='saveMeasurer()' data-dismiss="modal">{{"save"|translate}}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{"cancel"|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+<!--END MODAL ZA DODAVANJE NOVOG MERACA-->
+
+<div *ngFor="let m of measurers;let j=index;">
+  <div class="modal fade" id="editMeasurerModal{{m.Id}}" role="dialog ">
+    <div class="modal-dialog ">
+      <div class="modal-content ">
+        <div class="modal-header ">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title ">{{"measurerinfo"|translate}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal ">
+            <div class="form-group ">
+              <label class="control-label col-sm-2 ">Url</label>
+              <div class="col-sm-8 ">
+                <input type="text" class="form-control " id="editMesurerUrl" [disabled]="m.Owner==null" name="measureUrl" [(ngModel)]="m.Url"
+                  placeholder='Url'>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">{{"measurevalue"|translate}}</label>
+              <div class="col-sm-8">
+                <select class="form-control" required #mv name="measureValue" id="editMeasureValue" [disabled]="true" [(ngModel)]="m.MeasuringUnit">
+                                <option value="Air Humidity">Vlažnost vazduha</option>
+                                <option value="Ground Humidity">Poljski vodni kapacitet</option>
+                                <option value="Ph">Ph vrednost</option>
+                                <option value="CaCO3">Kalcijum-karbonat(CaCO3)</option>
+                                <option value="N">Azot(N)</option>
+                                <option value="K2O">Kalijum(K2O)</option>
+                                <option value="P2O5">Fosfor(P2O5)</option>
+                                <option value="Hummus">Humus</option>
+                                <option value="GroundTemp">Temperatura zemlje</option>
+                            </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">{{"plantage"|translate}}</label>
+              <div class="col-sm-8">
+                <div class="checkbox" *ngFor="let plantage of plantages;let i=index;">
+                  <input id='{{plantage.title}}{{i}}' type="checkbox" name="ch{{i}}" [ngModel]="checkPlantage(i,m)" (ngModelChange)="checkChanged(i,m,$event)"
+                    [(ngModel)]="checkedPlantages[i]">
+                  <label for='{{plantage.title}}{{i}}'>{{plantage.title}}</label>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="modal-footer">
+            <button type="button" class='btn btn-primary' (click)='saveEditedMeasurer(m)' data-dismiss="modal">{{"save"|translate}}</button>
+            <button type="button" class="btn btn-default" (click)='cancelEdit()' data-dismiss="modal">{{"cancel"|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

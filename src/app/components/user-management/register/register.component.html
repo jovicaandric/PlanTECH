@@ -1,0 +1,222 @@
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            <a id="brand" [routerLink]='["/home"]' class="navbar-brand page-scroll">PlanTECH</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="lista">
+                    <a class="page-scroll link w3-bar-item w3-button" class="list-group-item" [routerLink]="['/login']">{{ "login" | translate }}</a>
+                </li>
+                <li>
+                    <a class="page-scroll link w3-bar-item w3-button" class="list-group-item" [routerLink]="['/register']">{{ "register" | translate}}</a>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown">{{currentLang}}<span class="caret"></span></a>
+                    <div class="list-group" class="dropdown-menu">
+                        <button type="button" class="w3-bar-item w3-button" class="list-group-item" (click)="changeLang('en')">{{ "en" | translate}}</button>
+                        <button type="button" class="w3-bar-item w3-button" class="list-group-item" (click)="changeLang('srb')">{{ "srb" | translate}}</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="login-page" *ngIf='!showBilling'>
+    <div class="form" id="forma" [@enterAnimation]>
+        <form class="login-form" [formGroup]="registerForm" #register="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' formControlName="firstname" required type="text" placeholder="{{ 'firstname' | translate }}" />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.firstname">
+                          {{ formErrors.firstname|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' formControlName="lastname" required type="text" placeholder="{{ 'lastname' | translate }}" />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.lastname">
+                          {{ formErrors.lastname|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' formControlName="username" required type="text" placeholder="{{ 'username' | translate }}" />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.username">
+                          {{ formErrors.username|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' formControlName="email" required type="text" placeholder="{{ 'email' | translate }}" />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.email">
+                          {{ formErrors.email|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' type='password' formControlName="password" required reverse="true" placeholder="{{ 'password' | translate }}"
+                />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.password">
+                          {{ formErrors.password|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class="input" type="password" formControlName="confirmPassword" required reverse="false" placeholder="{{ 'confirm password' | translate }}"
+                />
+                <div class='holdsSmall'>
+                    <small class="text-danger" *ngIf="formErrors.confirmPassword">
+                          {{ formErrors.confirmPassword|translate}}
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <button type="submit" class="btn btn-default logbutton" [disabled]="!register.form.valid">{{ 'create' | translate }}</button>
+                <p class=" message ">{{ 'alreadyRegistered' | translate }}<a [routerLink]='["/login"]'>{{ 'signIn' | translate }}</a></p>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Choosing billing plan -->
+
+<div class="billing-content" *ngIf='showBilling'>
+
+    <!-- Billing -->
+    <div class="billing">
+        <h4 class="content-header">{{"billing-text" | translate}}</h4>
+
+        <div class="row">
+            <!-- Pricing -->
+            <div class="col-md-3">
+                <div class="pricing hover-effect">
+                    <div class="pricing-head">
+                        <h3>{{ "worker" | translate }}<span>
+                            {{ "package-info-worker" | translate }} </span>
+                        </h3>
+                        <h4><i>€ </i>0<i>.0</i>
+                            <span id="hide">
+                            {{ "payment" | translate }}</span>
+                        </h4>
+                    </div>
+                    <ul class="pricing-content list-unstyled">
+                        <li>
+                            {{ "li-work" | translate }}
+                        </li>
+
+                    </ul>
+                    <div class="pricing-footer">
+                        <p>
+                            {{ "payment" | translate }}
+                        </p>
+                        <a href="javascript:;" class="btn dugme" (click)='write(0)'>
+                            {{ "choose" | translate }}
+                            </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pricing hover-effect">
+                    <div class="pricing-head">
+                        <h3>{{ "membership-basic" | translate }}<span>
+                            {{ "package-info-basic" | translate }} </span>
+                        </h3>
+                        <h4><i>€</i>99<i>.99</i>
+                            <span>
+                            {{ "payment" | translate }}</span>
+                        </h4>
+                    </div>
+                    <ul class="pricing-content list-unstyled">
+                        <li>
+                            {{ "li-basic" | translate }}
+                        </li>
+
+                    </ul>
+                    <div class="pricing-footer">
+                        <p>
+                            {{ "payment" | translate }}
+                        </p>
+                        <a href="javascript:;" class="btn dugme" (click)='write(1)'>
+                            {{ "choose" | translate }}
+                            </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pricing pricing-active hover-effect">
+                    <div class="pricing-head pricing-head-active">
+                        <h3>{{ "membership-standard" | translate }}<span>
+                            {{ "package-info-standard" | translate }} </span>
+                        </h3>
+                        <h4><i>€</i>299<i>.99</i>
+                            <span>
+                            {{ "payment" | translate }}</span>
+                        </h4>
+                    </div>
+                    <ul class="pricing-content list-unstyled">
+                        <li>
+                            {{ "li-standard" | translate }}
+                        </li>
+
+                    </ul>
+                    <div class="pricing-footer">
+                        <p>
+                            {{ "payment" | translate }}
+                        </p>
+                        <a href="javascript:;" class="btn dugme" (click)='write(2)'>
+                            {{ "choose" | translate }}
+                            </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pricing hover-effect">
+                    <div class="pricing-head">
+                        <h3>{{ "membership-premium" | translate }}<span>
+                            {{ "package-info-premium" | translate }} </span>
+                        </h3>
+                        <h4><i>€</i>599<i>.99</i>
+                            <span>
+                            {{ "payment" | translate }}</span>
+                        </h4>
+                    </div>
+                    <ul class="pricing-content list-unstyled">
+                        <li>
+                            {{ "li-premium" | translate }}
+                        </li>
+
+                    </ul>
+                    <div class="pricing-footer">
+                        <p>
+                            {{ "payment" | translate }}
+                        </p>
+                        <a href="javascript:;" class="btn dugme" (click)='write(3)'>
+                            {{ "choose" | translate }}
+                            </a>
+                    </div>
+                </div>
+            </div>
+            <!--//End Pricing -->
+        </div>
+    </div>
+    <!-- Billing End-->
+
+</div>

@@ -1,0 +1,35 @@
+<div class='row'>
+  <div class="col-md-12">
+    <!-- USERS LIST -->
+    <div class="box box-danger boxWind" >
+      <div class="box-header with-border">
+        <h3 class="box-title">Wind</h3>
+
+        <div class="box-tools pull-right">
+          
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">
+        <ul class="users-list clearfix">
+          <li *ngFor='let w of wind'>
+            <img [src]='w.image' alt="Wind Image" class='image'>
+            <a class="users-list-name" >{{w.speed}}</a>
+            <span class="users-list-date">{{w.time}}</span>
+          </li>
+        </ul>
+        <!-- /.users-list -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-center">
+        <a href="javascript:void(0)" class="uppercase"></a>
+      </div>
+      <!-- /.box-footer -->
+    </div>
+    <!--/.box -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->

@@ -1,0 +1,170 @@
+<div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content-header">
+        <h1 class="page-header">{{ 'findWorkers' | translate}}</h1>
+        <br>
+        <div class="row">
+            <div class='col-sm-6'>
+                <form class="search-form" #searchForm='ngForm'>
+
+                    <div class="input-group">
+                        <input type="text" (keyup)='getData()' name="search" class="form-control" name="search" [(ngModel)]="search" required #searchField="ngModel"
+                            placeholder="{{'searchUsername'|translate}}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                    <!-- /.input-group -->
+                </form>
+            </div>
+        </div>
+        <br>
+
+
+        <div class="row">
+            <!-- ======START -->
+            <div class="col-md-6">
+                <!-- Box Comment -->
+                <div class="box box-widget" *ngFor="let user of users" [hidden]='searchField.pristine'>
+                    <div class="box-header with-border">
+                        <div class="user-block">
+                            <img class="img-circle" src="{{user.image}}" alt="User Image">
+                            <span class="username"><a>{{user.firstname}} {{user.lastname}}</a></span>
+                            <span class="description">{{user.username}}</span>
+                            <input type="hidden" [(ngModel)]='user.id' name='id'>
+                        </div>
+                        <!-- /.user-block -->
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-block btn-primary btn-flat topp" *ngIf='user.sent=="Send request"' (click)='userSelect(user)'
+                                data-toggle="modal" data-target="#myModal" href="#">{{user.sent|translate}}</button>
+                            <button type="button" class="btn btn-block btn-primary btn-flat topp" *ngIf='user.sent=="Cancel request"' (click)="deleteRequest(user)">{{user.sent}}</button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+
+                <!-- <div class="box box-widget widget-user-2" *ngFor="let user of users" [hidden]='searchField.pristine'>
+                    
+                    <div class="widget-user-header bg-yellow">
+                        <div class="widget-user-image">
+                            <img class="img-circle" [src]="userPic" alt="User Avatar">
+                        </div>
+                        
+                        <h3 class="widget-user-username info">{{user.firstname}} {{user.lastname}}</h3>
+                        <h5 class="widget-user-desc info">{{user.username}}</h5>
+                        <input type="hidden" [(ngModel)]='user.id' name='id'>
+                    </div>
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
+                           
+                            <li><a *ngIf='user.sent=="Send request"' (click)='userSelect(user)' data-toggle="modal" data-target="#myModal"
+                                    href="#">{{user.sent}}</a>
+                                <a *ngIf='user.sent=="Cancel request"' (click)="deleteRequest(user)">{{user.sent}}</a>
+                            </li>
+                        </ul>
+                    </div>-->
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{'choosePlantage' | translate}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div *ngIf="!plantages.length" class="message-container">
+                                    <div class="message">
+                                        <i class="fa fa-leaf" style="font-size: 92pt;"></i>
+                                        <p class="text-muted" style="font-size: 16pt">{{'mustHavePlan'|translate}}</p>
+
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf='plantages.length > 0'>
+                                    <div class="col-sm-6">
+                                        <div class="checkbox default" style="margin-left:5px;">
+                                            <input type="checkbox" (change)='selectAll($event)'>
+                                            <label style="color:black">{{'allPlant'|translate}}</label>
+                                        </div>
+                                        <table class="table table-bordered table-striped">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'plantageName'|translate}}</th>
+                                                    <th>{{'allow'|translate}}</th>
+                                                    <th *ngIf='showHead==1 || selectAllC==true'>{{'permission'|translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor='let plantage of plantages'>
+                                                    <td>{{plantage.name}}</td>
+
+                                                    <td>
+                                                        <div class="checkbox default">
+                                                            <input #checkBox type="checkbox" (change)="updatePlantageCheck(plantage, $event)" [checked]='selectAllC==true'>
+                                                            <label></label>
+                                                        </div>
+                                                    </td>
+                                                    <!--  <td [hidden]='checkBox.checked' *ngFor='let permission of permissions'><input type="checkbox" 
+                                                             class="minimal-red" [(ngModel)]='d1'>{{permission.title}}</td>-->
+                                                    <td [hidden]='!checkBox.checked'>
+                                                        <div *ngFor="let permission of permissions" class="checkbox default">
+                                                            <input type="checkbox" value="p{{permission.id}}" (change)="updateCheckedOptions(permission, plantage, $event)" [checked]='selectAllC==true'
+                                                            />
+                                                            <label style="color:black"> {{permission.title |translate}}</label>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class='col-sm-6'>
+                                        <!-- quick email widget -->
+                                        <div class="box box-info top-border">
+                                            <div class="box-header">
+                                                <i class="fa fa-envelope"></i>
+
+                                                <h3 class="box-title">{{'message'|translate}}</h3>
+                                                <!-- tools box -->
+
+                                                <!-- /. tools -->
+                                            </div>
+                                            <div class="box-body">
+                                                <form action="#" method="post">
+
+                                                    <div>
+                                                        <textarea [(ngModel)]='message' name='message' class="textarea" placeholder="{{'message'|translate}}" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="notice notice-warning">
+                                            <strong>{{'warn'|translate}}</strong> &nbsp;
+                                            <p class="inline" #warn>{{"warnText"|translate}}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer" *ngIf='plantages.length > 0'>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{'cancel'|translate}}</button>
+                                <button type="button" (click)='changeText();' class="btn btn-primary" data-dismiss="modal">{{'sendRequest'|translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+
+
+        </div>
+
+
+    </section>
+</div>
+<ng2-toasty></ng2-toasty>

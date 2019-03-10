@@ -1,0 +1,87 @@
+<section class="content">
+
+
+
+  <div style="position: relative; margin-left: 5px; margin-top:5px;">
+    <div id="loadingMsg" *ngIf='days.length==0' style="padding-top: 50px; position: absolute; background-color: white; top: -20px; left: -20px; width: 110%; height: 110%; z-index: 1000;">
+
+      <h2 style="text-align: center; font-weight: bold; color: rgba(0,166,90,1);">{{ "loading" | translate }}...</h2>
+      <div class="loader" style="margin: auto; width: 60px;">
+        <div class="loader-inner line-scale">
+          <div style="background-color: rgba(0,166,90,1);"></div>
+          <div style="background-color: rgba(0,166,90,1);"></div>
+          <div style="background-color: rgba(0,166,90,1);"></div>
+          <div style="background-color: rgba(0,166,90,1);"></div>
+          <div style="background-color: rgba(0,166,90,1);"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+
+
+      <div class='col-md-12'>
+        <div class="container">
+          <div class="row" style='margin-bottom:20px;'>
+            <div class="col-sm-4 today">
+              <h3 class='descToday location' style='margin-bottom:0px;'>{{locationCurrent}}</h3>
+              <p class='descToday' style='margin-bottom:0px; margin-top:3px;'>{{todayDay | translate }} {{hours}}</p>
+              <p *ngIf='currLang=="srb"' class='descToday' style='margin-top:2px;'>{{summary}}</p>
+              <div class="float">
+                <img [src]='todayIcon' class="img-responsive">
+              </div>
+              <div class="float">
+                <span class='temperature'>{{ currentTemp }}&deg;c</span>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class='info'>
+                {{'Precip probability:' | translate}} {{precip}}% <br> {{'Humidity' | translate}}: {{humidity}}%
+                <br> {{'Wind speed' | translate}}: {{windSpeed}} m/s <br>
+              </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class="col-sm-12 ">
+
+              <tabset (onSelect)='showTemp($event)'>
+                <tab title="{{'Precip probability' | translate}}">
+
+
+                  <!-- Sales Chart Canvas -->
+                  <div id="myDiv1" style="width: 100%; height:152px "></div>
+
+
+                </tab>
+                <tab title="{{'Temperature' | translate}}">
+                  <div id="myDiv" style="width:100%; height:152px "></div>
+
+                </tab>
+              </tabset>
+
+            </div>
+          </div>
+
+          <div class="main-grid2-left" *ngFor='let day of days'>
+            <h5 class='dayName'>{{day.day|translate}}</h5>
+            <img [src]='day.icon' class="img-responsive">
+            <div style="display: inline">
+              <span class='maxT'>{{ day.maxTemp }}&deg;</span>
+            </div>
+            <div style="display: inline">
+              <span class='minT'>{{ day.minTemp }}&deg;</span>
+            </div>
+          </div>
+
+          <div style="height: 20px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+</section>

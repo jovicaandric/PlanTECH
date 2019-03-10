@@ -1,0 +1,11 @@
+.precipGraph {
+     -webkit-box-shadow: 0px 0px 5px 1px #e6e6e6;
+       -moz-box-shadow: 0px 0px 5px 1px #e6e6e6;
+            box-shadow: 0px 0px 5px 1px #e6e6e6;
+        border-top: none;
+        border-radius: 0px;
+}
+
+.tick line {
+  opacity: 0;
+}

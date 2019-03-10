@@ -1,0 +1,143 @@
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark" *ngIf="!(router.url == '/home' || router.url == '/' || router.url == '/login' || router.url == '/register')">
+  <h5 style="color:white;margin-top:10px;margin-left: 10px">{{"chooseTheme"|translate}}</h5>
+  <div class="tab-pane" id="control-sidebar-settings-tab">
+    <!-- Create the tabs -->
+    <ul class="list-unstyled clearfix">
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-blue')">
+        <a href="javascript:void(0);" data-skin="skin-blue" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9;"></span><span class="bg-light-blue"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "blue" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-black')">
+        <a href="javascript:void(0);" data-skin="skin-black" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe;"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "white" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-purple')">
+        <a href="javascript:void(0);" data-skin="skin-purple" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "purple" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-green')">
+        <a href="javascript:void(0);" data-skin="skin-green" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "green" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-red')">
+        <a href="javascript:void(0);" data-skin="skin-red" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "red" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-yellow')">
+        <a href="javascript:void(0);" data-skin="skin-yellow" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin">{{ "yellow" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-blue-light')">
+        <a href="javascript:void(0);" data-skin="skin-blue-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9;"></span><span class="bg-light-blue"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px">{{ "blueLight" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-black-light')">
+        <a href="javascript:void(0);" data-skin="skin-black-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe;"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px">{{ "blackLight" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-purple-light')">
+        <a href="javascript:void(0);" data-skin="skin-purple-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px">{{ "purpleLight" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-green-light')">
+        <a href="javascript:void(0);" data-skin="skin-green-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px">{{ "greenLight" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-red-light')">
+        <a href="javascript:void(0);" data-skin="skin-red-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px">{{ "redLight" | translate }}</p>
+      </li>
+      <li style="float:left; width: 33.33333%; padding: 5px;" (click)="changeTheme('skin-yellow-light')">
+        <a href="javascript:void(0);" data-skin="skin-yellow-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+          <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow"
+              style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+          <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+        </a>
+        <p class="text-center no-margin" style="font-size: 12px;">{{ "yellowLight" | translate }}</p>
+      </li>
+    </ul>
+
+    <!--<div class="form-group" style='margin-left:20px;'>
+    <label class="control-sidebar-subheading">
+              Send notifications on email
+              <input type="checkbox" (change)='updateCheck($event)'>
+            </label>
+  </div>-->
+  </div>
+
+  <div class="tab-pane" id="control-sidebar-settings-tab">
+
+
+
+    <!-- /.form-group -->
+
+    <div class="form-group" style='margin-left:10px; margin-top: 15px;'>
+      <label class="control-sidebar-subheading">
+              {{"emailNot"|translate}}
+              <input type="checkbox" class="pull-right" style="margin-right:5px" [checked]='sendChecked==1' (change)='updateCheck($event)'>
+            </label>
+      <p style='margin-top: 5px'>
+        {{"sendEmailNot"|translate}}
+      </p>
+    </div>
+
+
+    <!-- /.form-group -->
+
+
+    <!-- /.form-group -->
+
+
+    <!-- /.form-group -->
+
+  </div>
+  <!-- /.tab-pane -->
+
+</aside>
+<!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>

@@ -1,0 +1,363 @@
+<!--nav class="col-sm-2 col-md-2 hidden-xs-down bg-faded sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Analytics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Export</a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item again</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">One more nav</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Another nav item</a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item again</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">One more nav</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Another nav item</a>
+            </li>
+          </ul>
+        </nav-->
+<!--
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <aside id="sidebar">
+            <ul id="sidemenu" class="sidebar-nav list-group">
+                <li class="list-group-item-heading">
+                    <span class="sidebar-icon"><i class="fa fa-dashboard"></i></span>
+                    <span class="sidebar-title-group">Nesto</span>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/index']">
+                        <span class="sidebar-icon"><span class="glyphicon glyphicon-dashboard"></span></span>
+                        <span class="sidebar-title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/map']">
+                        <span class="sidebar-icon"><span class="glyphicon glyphicon-globe"></span></span>
+                        <span class="sidebar-title">Map</span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/weather']">
+                        <span class="sidebar-icon"><span class="glyphicon glyphicon-cloud"></span></span>
+                        <span class="sidebar-title">Weather</span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a>
+                        <span class="sidebar-icon"><span class="glyphicon glyphicon-user"></span></span>
+                        <span class="sidebar-title">Users</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </aside>
+    </div>
+</div>-->
+
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar" *ngIf="!(router.url == '/home' || router.url == '/' || router.url == '/login' || router.url == '/register')">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel" style="padding-bottom:20px;">
+      <div class="pull-left image" [routerLink]="['/user-profile']">
+        <div class='img-responsive' style='border:2px solid lightgray;border-radius:100%;overflow: hidden;width:45px; height:45px;margin:auto'><img src="{{userAvatar}}" style='position: relative; 
+    '></div>
+        <!--<img [src]='userAvatar' class="img-circle" alt="User Image" style="height: 48px; width: 50px;">-->
+      </div>
+      <div class="pull-left info" style="padding-bottom:0px;">
+        <p style="margin-bottom:2px;" [routerLink]="['/user-profile']">{{user.Firstname+" "+user.Lastname}}</p>
+        <div *ngIf='billingId'>
+          <small style="margin-bottom:3px;" *ngIf='billingId==1'>{{"membership-basic" | translate}}</small>
+          <small style="margin-bottom:3px;" *ngIf='billingId==2'>{{"membership-standard" | translate}}</small>
+          <small style="margin-bottom:3px;" *ngIf='billingId==3'>{{"membership-premium" | translate}}</small>
+          <div *ngIf='billingId!=3&&billingId!=0' class="progress">
+            <progressbar [max]="max" [value]="current">
+            </progressbar>
+          </div>
+          <div style="width:100%;">
+            <span *ngIf='billingId==0' style="color:white; white-space:nowrap; font-size:8pt;">{{"upgradePlant" | translate}}</span>
+            <span *ngIf='current!=max&&billingId!=3' style="color:white; white-space:nowrap; font-size:8pt;">{{current}} / {{max}} {{"plantage" | translate}}</span>
+            <span *ngIf='current==max' style="color:white; white-space:nowrap; font-size:8pt;">{{"maxed" | translate}}</span>
+            <span *ngIf='billingId==3' style="color:white; white-space:nowrap; font-size:8pt;">{{"infinitePlantages" | translate}}</span>
+            <i *ngIf='billingId!=3' class="fa fa-chevron-circle-up pull-right upgrade" data-toggle="tooltip" data-placement="right" title="{{'upgradePlant' | translate}}"
+              (click)='upgradePlan()'></i>
+            <i *ngIf='billingId==3' class="ionicons ion-ios-infinite pull-right upgrade" data-toggle="tooltip" data-placement="right"
+              title="{{'infinitePlantages' | translate}}"></i>
+          </div>
+        </div>
+        <div *ngIf='!billingId'>
+          <small style="margin-bottom:3px;">{{ "worker" | translate}}</small>
+          <div style="width:100%;">
+            <span style="color:white; white-space:nowrap; font-size:8pt;">{{"upgradePlant" | translate}}</span>
+            <i class="fa fa-chevron-circle-up pull-right upgrade" data-toggle="tooltip" data-placement="right" title="{{'upgradePlant' | translate}}"
+              (click)='upgradePlan()'></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- search form -->
+    <!--<form action="#" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder='{{ "search" | translate }} ...'>
+        <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+      </div>
+    </form>-->
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="header">{{ "mainNav" | translate }}</li>
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/index"]'>
+          <i class="fa fa-dashboard"></i> <span>&nbsp;{{"dashboard" | translate}}</span>   
+        </a>
+      </li>
+
+      <li *ngIf="hasPlantages||isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/plantages"]'>
+          <i class="fa fa-leaf"></i> <span>&nbsp;{{"plantage" | translate}}</span>         
+        </a>
+      </li>
+
+      <li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/measurers"]'>
+          <i class="fa fa-thermometer-quarter"></i>
+          <span>&nbsp;{{"measurers" | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/plants"]'>
+          <i class="fa fa-pagelines"></i>
+          <span>&nbsp;{{"plants" | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="isRuler" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/rules"]'>
+          <i class="fa fa-list-ol"></i>
+          <span>&nbsp;{{"rules" | translate}}</span>
+        </a>
+      </li>
+
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/weather"]'>
+          <i class="fa fa-cloud"></i> <span>&nbsp;{{"weather" | translate}}</span>
+        </a>
+      </li>
+
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/planner"]'>
+          <i class="fa fa-calendar"></i> <span>&nbsp;Planner</span>
+          <!--
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">new</small>
+            </span> -->
+        </a>
+      </li>
+      <li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/my-employees"]'>
+          <i class="fa fa-users"></i>
+          <span>&nbsp;{{"employees" | translate}}</span>
+          <!--<span class="pull-right-container">
+               <small class="label pull-right bg-green" *ngIf="myEmployees && myEmployees.length>0">{{myEmployees.length}}</small>
+           </span>-->
+        </a>
+      </li>
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/my-employers"]'>
+          <i class="fa fa-id-badge"></i> <span>&nbsp;{{"my-employers" | translate}}</span>        
+        </a>
+      </li>
+      <li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/job-requests"]'>
+          <i class="fa fa-user fa"></i>
+          <span>&nbsp;{{"job-req" | translate}}</span>
+          <!--<span class="pull-right-container">
+               <small class="label pull-right bg-yellow" *ngIf="jobRequests && jobRequests.length>0">{{jobRequests.length}}</small>
+           </span>-->
+        </a>
+      </li>
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/job-offers"]'>
+          <i class="fa fa-list-alt"></i>
+          <span>&nbsp;{{"job-offers" | translate}}</span>
+          <!--<span class="pull-right-container">
+               <small class="label pull-right bg-yellow" *ngIf="jobOffers && jobOffers.length>0">{{jobOffers.length}}</small>
+           </span>-->
+        </a>
+      </li>
+      <li class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/find-work"]'>
+          <i class="fa fa-briefcase"></i>
+          <span>&nbsp;{{"employers" | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/work-requests"]'>
+          <i class="fa fa-wrench"></i>
+          <span>&nbsp;{{"find workers" | translate}}</span>
+        </a>
+      </li>
+
+
+      <!--<li *ngIf="isOwner" class="treeview" [routerLinkActive]='["active"]' [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]='["/rules"]'>
+          <i class="fa fa-list-ol"></i>
+          <span>&nbsp;{{"rules" | translate}}</span>
+        </a>
+      </li>-->
+
+      <!-- OSTALO NAM ZA SAD NE TREBA ALI NEKA GA ZAKOMENTARISANO
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>&nbsp;UI Elements</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
+            <li><a href="UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
+            <li><a href="UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+            <li><a href="UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
+            <li><a href="UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
+            <li><a href="UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>&nbsp;Forms</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
+            <li><a href="forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+            <li><a href="forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-table"></i> <span>&nbsp;Tables</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+            <li><a href="tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="calendar.html">
+            <i class="fa fa-calendar"></i> <span>&nbsp;Calendar</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red">3</small>
+              <small class="label pull-right bg-blue">17</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="mailbox/mailbox.html">
+            <i class="fa fa-envelope"></i> <span>&nbsp;Mailbox</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-yellow">12</small>
+              <small class="label pull-right bg-green">16</small>
+              <small class="label pull-right bg-red">5</small>
+            </span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>&nbsp;Examples</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
+            <li><a href="examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
+            <li><a href="examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
+            <li><a href="examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
+            <li><a href="examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
+            <li><a href="examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
+            <li><a href="examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
+            <li><a href="examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
+            <li><a href="examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-share"></i> <span>&nbsp;Multilevel</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Level One
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+          </ul>
+        </li>
+        <li><a href="../documentation/index.html"><i class="fa fa-book"></i> <span>&nbsp;Documentation</span></a></li>
+        <li class="header">LABELS</li>
+        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>&nbsp;Important</span></a></li>
+        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>&nbsp;Warning</span></a></li>
+        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>&nbsp;Information</span></a></li>
+        -->
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>

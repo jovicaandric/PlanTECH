@@ -1,0 +1,52 @@
+.form-control {
+   border-radius: 0px;
+}
+
+.data-row {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.content-wrapper {
+    background-color: white;
+}
+
+.form-control:focus {
+  border: 1px solid #004d99;
+  border-radius: 0px;
+  outline: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.info {
+    color: white;
+}
+
+.minimal-red {
+    color:red;
+}
+
+.content-wrapper {
+    background-color: white;
+}
+
+.bground {
+   background-color: #00c0ef;
+}
+
+.message-container {
+    margin-top: 15%;
+}
+
+@media only screen and (max-width: 414px) {
+    .message-container {
+        margin-top: 35%;
+    }
+}
+
+.message {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    opacity: 0.6;
+}

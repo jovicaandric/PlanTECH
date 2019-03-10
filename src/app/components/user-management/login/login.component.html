@@ -1,0 +1,68 @@
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            <a id="brand" [routerLink]='["/home"]' class="navbar-brand page-scroll">PlanTECH</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="lista">
+                    <a class="page-scroll link w3-bar-item w3-button" class="list-group-item" [routerLink]="['/login']">{{ "login" | translate }}</a>
+                </li>
+                <li>
+                    <a class="page-scroll link w3-bar-item w3-button" class="list-group-item" [routerLink]="['/register']">{{ "register" | translate}}</a>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown">{{currentLang}}<span class="caret"></span></a>
+                    <div class="list-group" class="dropdown-menu">
+                        <button type="button" class="w3-bar-item w3-button" class="list-group-item" (click)="changeLang('en')">{{ "en" | translate}}</button>
+                        <button type="button" class="w3-bar-item w3-button" class="list-group-item" (click)="changeLang('srb')">{{ "srb" | translate}}</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+<div class="login-page">
+    <div class="form" id="forma" [@enterAnimation]>
+        <form novalidate class="" (ngsubmit)='onLoginSubmit(formLogin)' #formLogin='ngForm'>
+            <p class="text-success"><i class="fa fa-info-circle"></i>&nbsp;{{"caseSensitive"|translate}}</p>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' [(ngModel)]='username' #userName='ngModel' name="username" type="text" placeholder="{{ 'username' | translate }}"
+                />
+                <div class='holdsSmall'>
+                    <small [hidden]="userName.valid ||  formLogin.submitted" class="text-danger ">
+                    {{ 'Please enter your username' | translate }} 
+              </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <input class='input' [(ngModel)]='password' #passWord='ngModel' name="password" type="password" placeholder="{{ 'password' | translate }}"
+                />
+                <div class='holdsSmall'>
+                    <small [hidden]="passWord.valid || formLogin.submitted" class="text-danger ">
+                  {{ 'Please enter your password' | translate }}
+              </small>
+                </div>
+            </div>
+            <div class="col-md-20 col-sm-20 col-lg-20">
+                <button (click)="onLoginSubmit(formLogin)" class="btn btn-default logbutton">{{ 'login' | translate }}</button>
+                <p class="message" style="margin:10px;">- OR -</p>
+                <button (click)="google()" class="btn btn-default googleButton"><i class="fa fa-google fa-lg" ></i>&nbsp; Koristite Google nalog</button>
+                <p class="message">{{ 'notRegistered' | translate }} <a [routerLink]="['/register']">{{ "createAccount" | translate }}</a></p>
+                <p class="message" style="font-size:16px;"><a (click)="forgot()">{{ 'forgotPass' | translate }} </a></p>
+            </div>
+        </form>
+    </div>
+</div>

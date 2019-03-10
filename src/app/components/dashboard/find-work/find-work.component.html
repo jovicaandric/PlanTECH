@@ -1,0 +1,86 @@
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content-header">
+    <h1 class="page-header">{{ 'findOwner' | translate}}</h1>
+    <br>
+    <div class="row">
+      <div class='col-sm-6'>
+        <form class="search-form" #searchForm='ngForm'>
+
+          <div class="input-group">
+            <input type="text" (keyup)='getData()' name="search" class="form-control" name="search" [(ngModel)]="search" required #searchField="ngModel"
+              placeholder="{{'searchUsername'|translate}}">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          </div>
+          <!-- /.input-group -->
+        </form>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget" *ngFor="let user of users" [hidden]='searchField.pristine'>
+          <div class="box-header with-border">
+            <div class="user-block">
+              <img class="img-circle" src="{{user.image}}" alt="User Image">
+              <span class="username"><a>{{user.firstname}} {{user.lastname}}</a></span>
+              <span class="description">{{user.username}}</span>
+              <input type="hidden" [(ngModel)]='user.id' name='id'>
+            </div>
+            <!-- /.user-block -->
+            <div class="box-tools">
+              <button type="button" class="btn btn-block btn-primary btn-flat topp" *ngIf='user.sent=="Send request"' (click)='userSelect(user)'
+                data-toggle="modal" data-target="#myModal" href="#">{{user.sent|translate}}</button>
+              <button type="button" class="btn btn-block btn-primary btn-flat topp" *ngIf='user.sent=="Cancel request"' (click)="deleteRequest(user)">{{user.sent}}</button>
+            </div>
+            <!-- /.box-tools -->
+          </div>
+
+          <!-- /.box-footer -->
+
+
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">{{'sendRequest'| translate}}</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="box box-info">
+                    <div class="box-header">
+                      <i class="fa fa-envelope"></i>
+
+                      <h3 class="box-title">{{'message'|translate}}</h3>
+                    </div>
+                    <div class="box-body">
+                      <textarea [(ngModel)]='message' name='message' class="textarea" placeholder="{{'message'|translate}}" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default buttons" data-dismiss="modal">{{'cancel'|translate}}</button>
+                  <button type="button" (click)='sendRequest()' class="btn btn-primary buttons right" data-dismiss="modal">{{'sendRequest'|translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.widget-user -->
+
+
+      </div>
+
+
+    </div>
+
+    <!-- Button trigger modal -->
+
+  </section>
+</div>
+<ng2-toasty></ng2-toasty>

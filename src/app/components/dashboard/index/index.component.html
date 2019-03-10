@@ -1,0 +1,70 @@
+<div class="content-wrapper" style="background-color: #f2f2f2">
+  <section class="content-header">
+  </section>
+
+  <section class="content">
+    <div class='row'>
+      <div class='col-lg-8' style="padding:0;">
+        <app-map-widget></app-map-widget>
+      </div>
+      <div class='col-lg-4' style="padding:0;">
+        <app-info-boxes></app-info-boxes>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="box box-warning">
+          <div class="box-header ">
+            <h3 class="box-title handle ">{{ "plantage" | translate }}</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <!--button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button-->
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <app-plantage-widget></app-plantage-widget>
+                <!-- /.row -->
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+          <div class="box-footer text-center">
+            <a routerLink="/plantages">{{"seeAllPlantages"|translate}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="box  box-primary">
+          <div class="box-header">
+            <h3 class="box-title">{{ "weather1" | translate }} </h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <!--button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button-->
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <app-weather-widget></app-weather-widget>
+                <!-- /.row -->
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>

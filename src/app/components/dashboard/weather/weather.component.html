@@ -1,0 +1,213 @@
+<!--Weather-->
+
+<div class="content-wrapper" style="background-color: #f2f2f2">
+
+  <section class="content-header">
+    <h1>{{"weather" | translate}}</h1>
+  </section>
+
+  <section class="content">
+
+    <div class='row' style='margin-bottom: 20px;'>
+      <div class='col-sm-3'>
+        <div class="form-group">
+          <select class="form-control" #t (change)='getDataForPlantage(t.value)'>
+                 <option value="" disabled selected style='color:gray'>{{'choosePl'|translate}}</option>
+                    <option class='op' *ngFor='let p of usersPlantages' value='{{p.Id}}'>{{p.Name}}</option>
+                    
+                  </select>
+        </div>
+      </div>
+      <div class='col-sm-3'>
+        <div class="input-group input-group">
+          <input type="text" class="form-control" [(ngModel)]='search' placeholder="{{'enterLoc'|translate}}">
+          <span class="input-group-btn">
+                      <button type="button" class="btn btn-info btn-flat" (click)='codeAddress()'>{{'Go!'|translate}}</button>
+                    </span>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="position: relative; margin-top:5px;">
+      <div id="loadingMsg" *ngIf='flag==0' style="padding-top: 50px; position: absolute; background-color: white; top: -20px; left: -20px; width: 110%; height: 110%; z-index: 1000;">
+
+        <h2 style="text-align: center; font-weight: bold; color: rgba(0,166,90,1);">{{ "loading" | translate }}...</h2>
+        <div class="loader" style="margin: auto; width: 60px;">
+          <div class="loader-inner line-scale">
+            <div style="background-color: rgba(0,166,90,1);"></div>
+            <div style="background-color: rgba(0,166,90,1);"></div>
+            <div style="background-color: rgba(0,166,90,1);"></div>
+            <div style="background-color: rgba(0,166,90,1);"></div>
+            <div style="background-color: rgba(0,166,90,1);"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+
+        <div class='col-md-6'>
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ "Temperature" | translate }}</h3>
+
+
+            </div>
+            <div class="container">
+              <div class="row" style='margin-bottom:20px;'>
+                <div class="col-sm-4 today">
+                  <h3 class='descToday location' style='margin-bottom:0px;'>{{locationCurrent}}</h3>
+                  <p class='descToday' style='margin-bottom:0px; margin-top:3px;'>{{todayDay | translate }} {{hours}}</p>
+                  <p class='descToday' style='margin-top:2px;'>{{summary}}</p>
+                  <div class="float">
+                    <img [src]='todayIcon' class="img-responsive">
+                  </div>
+                  <div class="float">
+                    <span class='temperature'>{{ currentTemp }}&deg;c</span>
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <div class='info'>
+                    {{'Precip probability:' | translate}} {{precip}}% <br> {{'Humidity' | translate}}: {{humidity}}%
+                    <br> {{'Wind speed' | translate}}: {{windSpeed}} m/s <br>
+                  </div>
+                </div>
+              </div>
+              <div class='row'>
+                <div class="col-sm-12 tabs">
+
+                  <!--  <div class='holdsGraph'>
+                      <ngx-charts-area-chart [showGridLines]='false' [view]="view" [scheme]="colorScheme" [results]="dataGraph" [gradient]="gradient"
+                        [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale">
+                      </ngx-charts-area-chart>
+                    </div>
+                  -->
+                  <div id="myDiv" style="width:100%; height:180px;border-top:1px solid lightgray"></div>
+
+                </div>
+              </div>
+
+              <div class="main-grid2-left" *ngFor='let day of days'>
+                <h5 class='dayName'>{{day.day|translate}}</h5>
+                <img [src]='day.icon' class="img-responsive">
+                <div style="display: inline">
+                  <span class='maxT'>{{ day.maxTemp }}&deg;</span>
+                </div>
+                <div style="display: inline">
+                  <span class='minT'>{{ day.minTemp }}&deg;</span>
+                </div>
+              </div>
+
+              <div style="height: 20px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-6'>
+          <!-- WIND-->
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ "wind" | translate }}</h3>
+
+              <div class="box-tools pull-right">
+
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list clearfix">
+                <li *ngFor='let w of wind'>
+                  <img [src]='w.image' alt="Wind Image" class='image'>
+                  <a class="users-list-name">{{w.speed}}</a>
+                  <span class="users-list-date">{{w.time}}</span>
+                </li>
+              </ul>
+              <!-- /.users-list -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="javascript:void(0)" class="uppercase"></a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- WIND-->
+
+
+          <div class='row'>
+            <div class='col-md-12'>
+
+              <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">{{ "precipitation" | translate }}</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                  </div>
+                </div>
+
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <!-- <div class="chart">
+                    <div id="chart1">
+                      <svg></svg>
+                    </div>
+
+                  </div>-->
+                      <div id="myDiv1" style="width: 100%;  height:180px"></div>
+                      <!-- /.chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+                <div class="box-footer">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-green"><i class="fa  fa-cloud"></i> {{cloudCover}}</span>
+                        <h5 class="description-header"></h5>
+                        <span class="description-text">{{ "cloudCover" | translate }}</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                   <!-- <div class="col-sm-4 col-xs-6">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-yellow"><i class="fa fa-road"></i> {{visibility}}</span>
+                        <h5 class="description-header"></h5>
+                        <span class="description-text">{{ "visibility" | translate }}</span>
+                      </div>
+                    </div>-->
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                      <div class="description-block border-right">
+                        <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> {{pressure}}</span>
+                        <h5 class="description-header"></h5>
+                        <span class="description-text">{{ "pressure" | translate }}</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- /.box-footer -->
+              </div>
+              <!-- /.box -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>

@@ -1,0 +1,6 @@
+<!--<flash-messages messagePositioning="top-center" style="width: 200px;"></flash-messages>-->
+<app-topnav *ngIf="!(router.url == '/home' || router.url == '/' || router.url == '/login' || router.url == '/register' || router.url == '/unautorized')"></app-topnav>
+<app-sidebar *ngIf="!(router.url == '/home' || router.url == '/' || router.url == '/login' || router.url == '/register' || router.url == '/unautorized')"></app-sidebar>
+<app-control-sidebar *ngIf="!(router.url == '/home' || router.url == '/' || router.url == '/login' || router.url == '/register' || router.url == '/unautorized')"></app-control-sidebar>
+<ng2-toasty></ng2-toasty>
+<router-outlet></router-outlet>

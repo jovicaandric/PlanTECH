@@ -1,0 +1,146 @@
+<app-topnav></app-topnav>
+<app-admin-sidebar></app-admin-sidebar>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"all-users" | translate}}</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+
+    <div class="input-group">
+      <input type="text" (keyup)='filter()' name="search" class="form-control" [(ngModel)]="search" required #searchField="ngModel"
+        placeholder="{{'search'|translate}}">
+      <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    </div>
+
+    <div *ngIf='users.length' style="overflow-x:auto;">
+      <table class="table table-striped table-responsive" [mfData]="users" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+          <tr>
+            <th style="width: 5%">
+              <mfDefaultSorter by="id">ID</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="username">{{"username"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="firstname">{{"firstname"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="lastname">{{"lastname"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 25%">
+              <mfDefaultSorter by="email">Email</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              {{"options"|translate}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data" class="data-row">
+            <td>{{item.id}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.firstname}}</td>
+            <td>{{item.lastname}}</td>
+            <td>{{item.email}}</td>
+            <td>
+              <span class="glyphicon glyphicon-pencil" style="cursor:pointer;color:#428bca" (click)="edit.open()"></span>              &nbsp;
+              <!-- EDIT MODAL -->
+                <modal #edit title="{{'update user' | translate}}" modalClass="modal-md" [closeOnOutsideClick]="false">
+
+                  <modal-content>                                       
+                    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+                      <div class="form-group">
+                        <label>{{'firstname' | translate}}</label>
+                        <input required id="firstname" type="text" class="form-control" value="{{item.firstname}}" [(ngModel)]="item.firstname" name="firstname"
+                          aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group">
+                        <label>{{'lastname' | translate}}</label>
+                        <input required id="lastname" type="text" class="form-control" value="{{item.lastname}}" [(ngModel)]="item.lastname" name="lastname"
+                          aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group">
+                        <label>{{'username' | translate}}</label>
+                        <input required id="username" type="text" class="form-control" value="{{item.username}}" [(ngModel)]="item.username" name="username"
+                          aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group">
+                        <label>{{'email' | translate}}</label>
+                        <input required id="email" type="text" class="form-control" value="{{item.email}}" [(ngModel)]="item.email" name="email" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group">
+                        <label>{{'newpass' | translate}}</label>
+                        <input id="newpass" type="password" class="form-control" placeholder="{{ 'newpass' | translate }}" [(ngModel)]="item.password"
+                          name="password" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group">
+                        <label>{{'repeatpass' | translate}}</label>
+                        <input id="repeatpass" type="password" class="form-control" placeholder="{{ 'repeatpass' | translate }}" [(ngModel)]="item.confirmPassword"
+                          name="confirmPassword" aria-describedby="basic-addon1">
+                      </div>
+                    </form>                                         
+                  </modal-content>
+                  <modal-footer>
+                    <div class="btn-group" role="group">
+                      <button [disabled]="!userForm.form.valid" type="button" class="btn btn-primary" (click)="updateUser(item)">{{'save'|translate}}</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-default" (click)="edit.close()">{{'cancel'|translate}}</button>
+                    </div>
+                  </modal-footer>
+
+                </modal>
+              
+
+              <span class="glyphicon glyphicon-trash" style="cursor:pointer;color:#d9534f" (click)="showDeleteModal(item)"></span>              &nbsp;
+              <!-- DELETE MODAL -->
+              
+              <modal #delete title="{{'warning' | translate}}" modalClass="modal-sm" [closeOnOutsideClick]="false">
+                  <modal-header>
+
+                  </modal-header>
+                  
+                  <modal-content>                                   
+                    <p>{{ "deleteWarning" | translate }}</p>
+                    <div style="float: right; margin-left: 5px;" class="checkbox">
+                      <label><input (click)="toogle()" type="checkbox" value="">{{ "dont show" | translate }}</label>
+                    </div>                
+                  </modal-content>
+
+                  <modal-footer>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary" (click)="deleteUser(item)">{{ "yes" | translate }}</button>
+                      </div>
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" (click)="delete.close()">{{ "no" | translate }}</button>
+                      </div>
+                    </div>
+                  </modal-footer>
+              </modal>
+
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </section>
+  <!-- /.content -->
+  <ng2-toasty></ng2-toasty>
+</div>
+<!-- /.content-wrapper -->

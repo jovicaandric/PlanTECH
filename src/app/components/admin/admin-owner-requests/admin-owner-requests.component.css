@@ -1,0 +1,47 @@
+.content-wrapper {
+   /* background-color: #FAFAFA;*/
+   background-color: white;
+}
+
+
+.input-group {
+    margin-bottom: 15px;
+    width: 500px;
+}
+
+@media only screen and (max-width: 414px) {
+    .input-group {
+        width: 100%;
+    }
+}
+
+p {
+    margin: 5px;
+}
+
+.checkbox {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+
+.data-row {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.message-container {
+    margin-top: 15%;
+}
+
+@media only screen and (max-width: 414px) {
+    .message-container {
+        margin-top: 35%;
+    }
+}
+
+.message {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    opacity: 0.6;
+}

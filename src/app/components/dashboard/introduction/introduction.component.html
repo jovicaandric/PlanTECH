@@ -1,0 +1,487 @@
+<div class="content-wrapper" style="background-color: #f2f2f2 !important; ">
+
+
+  <section class="col-md-12">
+
+    <!-- PLANTECH-->
+
+    <div class="box box-default collapsed-box first " [@enterAnimation] (@enterAnimation.start)="animationStart()">
+      <div class="box-header with-border">
+
+
+        <h3 class="box-title" class='naslov'>Dobrodošli na PlanTECH!</h3>
+        <p style="margin-top:0px;margin-left:5px; font-style: italic">Softver koji razmišlja umesto vas</p>
+
+        PlanTECH predlaže odgovarajuće mere i nadgleda vaše plantaže. Kako bi korišćenje aplikacije bilo što jednostavnije, PlanTECH
+        nudi uputstvo za korišćenje.
+
+      </div>
+
+
+    </div>
+    <!--  PLANTECH -->
+
+
+    <!--  KREIRANJE PLANTAZE -->
+    <div class="box box-default collapsed-box card1">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-map" style="color:#00A65A"></i>
+
+        <h3 class="box-title">Kreiranje nove plantaže</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Kreiranje nove plantaže moguće je odabirom stavke <i>Plantaže</i> u levom meni-u. Dodavanje nove plantaže vrši se
+        pritiskom na dugme <i>Dodaj novu plantažu</i> prilikom čega se otvara prikaz mape. Plantaža se na mapi iscrtava <i>klikom na mapu + prevlačenjem miša</i>.
+        Potrebno je napraviti zatvoreni oblik.
+
+        <img [src]="map1" alt="User Image" class='img-responsive' style="width: 875px;margin:auto;margin-top:20px;margin-bottom:20px;">        Nakon predstavljanja plantaže na mapi, potrebno je pritisnuti dugme <i>Napred</i> pri čemu se prikazuje forma za
+        odabir kultura koje će se gajiti na plantaži.<br> Forma ima sledeći izgled
+        <img [src]="addP" class='img-responsive' style="width: 726px;margin-top:20px;margin-bottom:20px;"> Pritiskom na dugme
+        <i>Sačuvaj</i> plantaža će biti dodata u sistem, nakon čega je moguće vršiti izmene na plantaži kao i praćenje stanja
+        na plantaži korišćenjem mogućnosti koje <b>PlanTech</b> sistem nudi.
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/plantages"]' class="uppercase">Dodaj novu plantažu</a>
+      </div>
+
+    </div>
+    <!--  KREIRANJE PLANTAZE -->
+
+
+
+
+
+    <!--  PREGLED PLANTAZA -->
+    <div class="box box-default collapsed-box card2">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-leaf" style="color:#605CA8"></i>
+
+        <h3 class="box-title">Pregled plantaža</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Pregled plantaža vrši se odabirom stavke <i>Plantaže</i> prilikom čega je moguće odabrati jednu od dve opcije: <br>
+        <i>Tabelarni prikaz plantaža</i> <br>
+        <i>Prikaz plantaža na mapi</i>
+
+        <img [src]="showP" class='img-responsive' style="width: 293px;margin-top:20px;margin-bottom:20px;"> Odabirom tabelarnog
+        pikaza na ekranu se prikazuju plantaže kao i informacije o plantažama pojedinačno (<i>Ime plantaže, kulture na njoj zasađene, informacije o kulturama...</i>)
+        Svakoj od plantaža moguće je predefinisati granice na mapi prelaskom mišem preko plantaže prilikom čega se prikazuju
+        ikonice za izemnu i brisanje plantaže.
+
+
+        <img [src]="editP" class='img-responsive' style="width: 814px;;margin-top:20px;margin-bottom:20px;"> Pored svake
+        od plantaža postoje i opcije za prikaz plantaže na mapi, vremenske prognoze lokacije na kojoj se plantaža nalazi,
+        prikaz merača i vrednosti na njima, kao i upozorenja za korisnika ukoliko je potrebno vršiti navodnjavanje na plantaži.
+
+        <img [src]="options" class='img-responsive' style="width: 397px;margin-top:20px;margin-bottom:20px;"> Odabirom opcije
+        za prikaz vremenske prognoze na ekranu se pojavljuje meni u kome je moguće izabrati informacije o
+        <i>Padavinama</i>
+        <i>Temperaturi</i>
+        <i>Vetru</i>
+        <i>Prognozi za naredih 7 dana</i>
+        <i>Prognozi za određeni prethodni period</i>
+        <br>
+        <i>Napomena:</i> Moguće je da u našoj bazi neće postojati informacije o prognozi za prethodni period ukoliko je plantaža
+        tek napravljena. Količina informacija zavisi od perioda koji je protekao od početka pravljenja plantaže.
+
+        <img [src]="tabs" class='img-responsive' style="width: 615px; margin-top:20px;margin-bottom:20px;"> Odabirom opcije
+        za prikaz merenja prikazuje se grafik sa merenjima prilikom čega je moguće isključiti i uključiti prikaz vrednosti
+        sa pojedinih merača pritiskom na naziv merača u legendi desno.
+
+        <img [src]="measure" class='img-responsive' style="width: 898; margin-top:20px;margin-bottom:20px;"> Klikom na opcije
+        levo iznad grafika moguće je na grafiku prikazati merenja samo za odabrani period. Ispod grafika nalazi se slajder
+        na kojem je takođe moguće odabrati prikaz željenog perioda prevlačenjem ivica slajdera.
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/plantages"]' class="uppercase">Pregledajte svoje plantaže</a>
+      </div>
+
+    </div>
+
+
+    <!--  PREGLED PLANTAZA -->
+
+
+
+
+
+    <!-- PROGNOZA -->
+    <div class="box box-default collapsed-box card3">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa  fa-cloud" style="color:#F39C12"></i>
+
+        <h3 class="box-title">Vremenska prognoza</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        PlanTech svojim korisnicima omogućuje najnovije podatke o vremenskoj prognozi. Za pregled vremenske prognoze potrebno je
+        u levom meni-u odabrati stavku <i>Vremenska prognoza</i>. Na stranici za vremensku prognozu možete odabrati
+        prikaz vremenske prognoze za lokaciju neke od svojih plantaža koje će vam biti prikazane. Jos jedna od opcija je
+        pretraga željene lokacije.
+
+        <img [src]="weather" class='img-responsive' style="width: 548px;margin:auto;margin-top:20px;margin-bottom:20px;">        Nakon odabira lokacije ili plantaže, na ekranu se prikazuje mnoštvo infromacija o prognozi.
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/weather"]' class="uppercase">Informišite se o prognozi na vašim plantažama</a>
+      </div>
+
+    </div>
+    <!--  PROGNOZA -->
+
+
+
+
+    <!-- PLANER -->
+    <div class="box box-default collapsed-box card4">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa  fa-calendar-check-o" style="color:#3C8DBC"></i>
+
+        <h3 class="box-title">Planer</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Svoje obaveze možete organizovati na stranici <i>Planer</i>. Planer omogućuje dodavanje podsetnika pri čemu je potrebno
+        uneti naziv podsetnika, a postoji i mogućnost odabira željene boje. Nakon pritiska na dugme <i>Dodaj</i> podsetnik
+        će biti dodat u listu podsetnika. Nakon toga korisnik može prevlačenjem podsetnika mišem da doda podsetnik u kalendar.
+
+        <img [src]="planer" class='img-responsive' style="width: 279px;margin:auto;margin-top:20px;margin-bottom:20px;">        Ukoliko je čekirana opcija <i>ukloni nakon prevlačenja</i> podsetnik će nakon prevlačenja u kalendar biti izbrisan
+        iz liste podsetnika. Klikom na podsetnik otvara se prozor za izmenu naziva i brisanje podsetnika.
+
+        <img [src]="calendar" class='img-responsive' style="width: 671px;margin:auto;margin-top:20px;margin-bottom:20px;">
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/planner"]' class="uppercase">Napravite podsetnike</a>
+      </div>
+
+    </div>
+    <!--  PLANER -->
+
+
+
+
+    <!-- ZAPOSLENI -->
+    <div class="box box-default collapsed-box card5">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa  fa-users" style="color:#DD4B39"></i>
+
+        <h3 class="box-title">Zaposleni</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Zaposleni na vašim plantažama možete dodati na dva načina:<br>
+        <i>Slanjem zahteva nekom od radnika koji već poseduje nalog na našoj aplikaciji i</i> <br>
+        <i>Možete vi da kreirate nalog vašem zaposlenom</i>
+        <br>
+        <br> Ukoliko je vaš izbor <b> prva opcija</b>, potrebno je u levom meni-u odabrati stavku <i>Pronađite radnike</i>        pri čemu se otvara strana sa sledećom formom
+
+        <img [src]="findWorkers" class='img-responsive' style="width: 548px;margin:auto;margin-top:20px;margin-bottom:20px;">        Potrebno je uneti korisničko ime radnika nakon čega će se prikazati profil radnika koji se podudara sa unetim korisničkim
+        imenom. Klikom na dugme <i>Pošalji zahtev</i>, otvara se forma za slanje zahteva za rad odabranom radniku. Na formi
+        je potrebno odabrati na kojim će plantažama radnik raditi, kao i dovole koje će na tim plantažama imati. Radniku
+        je moguće poslati i kratku poruku vezanu za zahtev.
+
+
+        <img [src]="req" class='img-responsive' style="width: 791px;margin:auto;margin-top:20px;margin-bottom:20px;"> Poslati
+        zahtev je moguće poništiti. <br> Kako bi radnik mogao da krene sa radom na vašim plantažama, potrebno je da prihvati
+        vaš zahtev za rad, o čemu će dobiti obaveštenje na svom profilu.
+        <br> Ukoliko izaberete <b>drugu opciju</b>, da sami kreirate nalog novom radniku, to možete učiniti na sledeći način.
+        Nakon odabira stavke <i>Moji zaposleni</i> u levom meni-u, prikazaće se dugme <i>Dodajte novog radnika</i>. Klikom
+        na dugme otvara se forma sledećeg oblika:
+
+        <img [src]="newE" class='img-responsive' style="width: 767px;margin:auto;margin-top:20px;margin-bottom:20px;"> Potrebno
+        je uneti tražene podatke i označiti na kojim bi plantažama radnik radio. Nakon uspešnog kreiranja naloga, možete
+        svog radnika obavestiti o podacima pomoću kojih će se prijavljivati na PlanTech sistem.
+
+        <br> Takođe, radnici mogu vama da pošalju zahtev za rad na vašim plantažama. Ti zahtevi biće prikazani u tabeli u
+        stavci levog meni-a <i>Zahtevi za posao</i>, kao i u obaveštenjima. Na ovoj stranici je moguće prihvatiti ili odbiti
+        zahtev za rad. Ukoliko odlučite da prihvatite zahtev potrebno je odabrti plantaže na kojima će radnik raditi.
+
+        <br><br> Nakon što na neki od pomenutih načina dodate zaposlenog oni će biti prikazani u tabeli na stranici <i>Moji zaposleni</i>.
+        Na ovoj stranici je moguće promeniti na kojim će plantažama radnik raditi.
+        <img [src]="myEmp" class='img-responsive' style="width: 743px;margin:auto;margin-top:20px;margin-bottom:20px;">
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/my-employees"]' class="uppercase">Zaposlite radnike na s svojim plantažama</a>
+      </div>
+
+    </div>
+    <!--  ZAPOSLENI -->
+
+
+
+    <!-- POSLODAVCI -->
+    <div class="box box-default collapsed-box card1">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa  fa-briefcase" style="color:#00A65A"></i>
+
+        <h3 class="box-title">Traženje posla</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Posao na plantažama nekog od poslodavalaca možete naći odabirom stavke <i>Pronađite posao</i> u levom meni-u. Potrebno
+        je prikazanoj formi uneti korisničko ime vlasnika plantaže na kojoj želite da radite. Ukoliko se uneto korisničko
+        ime poklapa sa korisničkim imenom nekog od vlasnika, biće prikazan profil vlasnika sa opcijom za slanje zahteva za
+        rad.
+        <br> Uz zahtev je moguće poslati i poruku.
+
+        <img [src]="owners" class='img-responsive' style="width: 562px;margin:auto;margin-top:20px;margin-bottom:20px;">        Ukoliko vlasnik prihvati vaš zahtev za posao, bićete obavešteni o tome.
+        <br>
+        <br> Vlasnike plantaža na kojima radite možete pregledati na stranici <i>Moji poslodavci</i>
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/planner"]' class="uppercase">Napravite podsetnike</a>
+      </div>
+
+    </div>
+    <!--  POSLODAVCI -->
+
+
+
+
+    <!-- MERACI -->
+    <div class="box box-default collapsed-box card2">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-thermometer-quarter" style="color:#605CA8"></i>
+
+        <h3 class="box-title">Merni instrumenti</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Merne instrumente moguće je dodati odabirom stavke <i>Merni instrumenti</i> u levom meni-u.
+        <img [src]="merni" class='img-responsive' style="width: 829px;margin:auto;margin-top:20px;margin-bottom:20px;"> Potrebno
+        je kliknuti na željeno mesto na mapi nakon čega će se otvoriti forma za unos informacija o mernom instrumentu.
+
+        <img [src]="measurer" class='img-responsive' style="width: 611px;margin:auto;margin-top:20px;margin-bottom:20px;">        Nakon popunjavanja forme potrebno je i odabrati plantaže koje će koristiti podatke sa mernog instrumenta.
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/measurers"]' class="uppercase">Dodajte merni instrument</a>
+      </div>
+
+    </div>
+    <!--  MERACI -->
+
+
+
+
+    <!-- BILJKE -->
+    <div class="box box-default collapsed-box card3">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-pagelines" style="color:#F39C12"></i>
+
+        <h3 class="box-title">Biljke</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        PlanTECH svojim korisnicima nudi korišćenje predefinisanih kultura. Kulture je moguće pronaći u stavci <i>Biljke</i>        u levom meni-u.
+        <img [src]="plants" class='img-responsive' style="width: 599px;margin:auto;margin-top:20px;margin-bottom:20px;">        Klikom na naziv kulture prikazuju se detaljne informacije o kulturi, pogodni uslovi za sađenje i uzgoj, sve što vam
+        je potrebno da biste uzgajali datu kulturu.
+
+        <img [src]="infoPlant" class='img-responsive' style="width: 577px;margin:auto;margin-top:20px;margin-bottom:20px;">        Ukoliko željena kultura ne postoji u našoj listi, moguće je definisati novu kulturu pritiskom na dugme <i>Dodajte novu biljku</i>.
+        Klikom na pomenuto dugme otvara se forma za unos Naziva biljke, podkulture, kategorije biljke (videti napomenu na
+        kraju sekcije).
+
+        <br>
+        <br>
+        <i>Napomena:</i> Sve biljke spadaju u jednu od pet kategorija <br>
+        <i>1. Voće</i><br>
+        <i>2. Povrće</i><br>
+        <i>3. Krmno bilje</i><br>
+        <i>4. Industrijsko bilje</i><br>
+        <i>5. Ratarsko bilje</i>, <br> pa je prilikom definisanja nove biljke potrebno odabrati jednu od navedenih kategorija.
+
+        <br> Klikom na opcije prikazuje se forma sa slike.
+        <img [src]="plantRule" class='img-responsive' style="width: 891px;margin:auto;margin-top:20px;margin-bottom:20px;">        Odabirom dodavanja nekog od pravila, prikazuje se slajder na kom je potrebno odabrati uslove pod kojima će se biljka
+        uzgajati. Nakon završenog definisanja, potrebno je pritisnuti dugme <i>Sačuvaj</i>.
+        <br> Ukoliko neki od vrednosti tokom uzgoja biljke padne ispod ili poraste iznad definisane vrednosti, dobićete obaveštenje
+        o tome, kao i obaveštenje o merama koje je protrebno preduzeti.
+        <br>
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/plants"]' class="uppercase">Dodajte biljke na svojim plantažama</a>
+      </div>
+
+    </div>
+    <!--  BILJKE -->
+
+
+    <!-- PRAVILA -->
+    <div class="box box-default collapsed-box card4">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-list-ol" style="color:#3C8DBC"></i>
+
+        <h3 class="box-title">Definisanje pravila</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Pravila je moguće definisati odabirom opcije <i>Pravila</i> u levom meni-u.
+        <img [src]="rule" class='img-responsive' style="width: 542px;margin:auto;margin-top:20px;margin-bottom:20px;">
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/measurers"]' class="uppercase">Dodajte merni instrument</a>
+      </div>
+
+    </div>
+    <!--  PRAVILA -->
+
+
+    <!-- PROFIL -->
+    <div class="box box-default collapsed-box card5">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-user" style="color:#DD4B39"></i>
+
+        <h3 class="box-title">Korisnički profil</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Korisničkom profilu moguće je pristupiti na sledeći način:
+
+        <img [src]="profill" class='img-responsive' style="width: 600px;margin:auto;margin-top:20px;margin-bottom:20px;">        Na stranici za izmenu korisničkog profila moguće je izmeniti sledeće podatke:
+        <img [src]="profile" class='img-responsive' style="width: 719px;margin:auto;margin-top:20px;margin-bottom:20px;">
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/user-profile"]' class="uppercase">Izmenite podatke na svom profilu</a>
+      </div>
+
+    </div>
+    <!--  PROFIL -->
+
+
+
+    <!-- PAKET -->
+    <div class="box box-default collapsed-box card1">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-credit-card" style="color:#00A65A"></i>
+
+        <h3 class="box-title">Nadogradnja paketa</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        U levom meni-u nalazi se informacija o trenutnom paketu koji koristite. Nadogradnju paketa moguće je izvršiti klikom na strelicu
+        prikazanu na slici ispod.
+        <img [src]="upgrade" class='img-responsive' style="width: 229px;margin:auto;margin-top:20px;margin-bottom:20px;">        Kako biste bili u mogućnosti da krenete s korišćenjem odabranog paketa, potrebno je da administrator prethodno potvrdi
+        vaš zahtev za nadogradnju. O prihvatanju ili odbijanju zahteva ćete takođe biti obavešteni.
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/measurers"]' class="uppercase">Dodajte merni instrument</a>
+      </div>
+
+    </div>
+    <!--  PAKET -->
+
+
+
+    <!-- OBAVESTENJA -->
+    <div class="box box-default collapsed-box card2">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa  fa-bell" style="color:#605CA8"></i>
+
+        <h3 class="box-title">Obaveštenja</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Obaveštenja o prihvaćenim ili odbijenim zahtevima za nadogradnju paketa, zahtevima za rad, kao i obaveštenja o kritičnim
+        vrednostima na plantažama, biće prikazana u gornjem meni-u.
+        <img [src]="notifi" class='img-responsive' style="width: 298px;margin:auto;margin-top:20px;margin-bottom:20px;">
+
+      </div>
+      <div class="box-footer text-center">
+        <a [routerLink]='["/notifications"]' class="uppercase">Pogledaj svoja obaveštenja</a>
+      </div>
+    </div>
+    <!--  OBAVESTENJA -->
+
+
+    <!-- TEME -->
+    <div class="box box-default collapsed-box card3">
+      <div class="box-header with-border" data-widget="collapse" style="cursor:pointer;">
+        <i class="fa fa-paint-brush" style="color:#F39C12"></i>
+
+        <h3 class="box-title">Teme</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="box-body">
+        Niste zadovoljni trenutnom temom sajta? Odaberite neku od tema koja vam odgovara. To možete učiniti na način prikazan na
+        slici ispod
+
+        <img [src]="control" class='img-responsive' style="width: 231px;margin:auto;margin-top:20px;margin-bottom:20px;">        Takođe, u ovom meniju je moguće i odabrati opciju da sva obaveštenja budu prosleđena na vašu email adresu.
+      </div>
+      <div class="box-footer text-center">
+      </div>
+
+    </div>
+    <!--  TEME -->
+  </section>
+</div>

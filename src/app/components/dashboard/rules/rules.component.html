@@ -1,0 +1,171 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"rules"|translate}}</h1>
+  </section>
+  <section class="content">
+    <div *ngIf="rules&&rules.length>0">
+      <div style="overflow-x:auto;">
+        <button type="button" (click)="newRule.open()" class="btn newRule"><i class='fa fa-plus' ></i>&nbsp;{{"addnewrule"|translate}}</button>
+      </div>
+      <table class="table table-stripped">
+        <thead>
+          <tr>
+            <th>{{'plantOwn'|translate}}</th>
+            <th>{{'plantage'|translate}}</th>
+            <th>{{'message'|translate}}</th>
+            <th>{{'conditions'|translate}}</th>
+            <th>{{'deleteRule'|translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of rules;let i=index;">
+            <td>{{r.owner.text}}</td>
+            <td>
+              <p *ngFor="let p of r.plantages">{{p.text}}</p>
+            </td>
+            <td>
+              {{r.message}}
+            </td>
+            <td>
+              <table class="table table-condensed" style="margin:0;">
+                <tr>
+                  <th style="width: 30%">{{'measurer'|translate}}</th>
+                  <th style="width: 30%">{{'value'|translate}}</th>
+                  <th style="width: 30%">{{'period'|translate}}</th>
+
+                </tr>
+                <tr *ngFor=" let c of r.conditions">
+                  <td>{{c.measurer}}</td>
+                  <td>
+                    <span *ngIf="c.value=='manje'">&lt;</span><span *ngIf="c.value=='vece'">&gt;</span><span *ngIf="c.value=='jednako'">=</span>                    {{c.ruleValue}} {{getMeasuringUnit(c.measurer)}}</td>
+                  <td>
+                    <span *ngIf="c.measurer!='Temperatura vazduha' &&c.measurer!='Mogucnost padavina'">{{'lastRule'|translate}} </span>
+                    <span *ngIf="c.measurer=='Temperatura vazduha' ||c.measurer=='Mogucnost padavina'">{{'futureRule'|translate}} </span>{{c.period}}
+                    {{'daysRule'|translate}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td><span class="fa fa-trash fa-lg text-danger" style="cursor:pointer;" (click)="deleteRule(i);"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!rules.length" class="message-container">
+      <div class="message">
+        <i class="fa fa-list-ol " style="font-size: 92pt;"></i>
+        <p class="text-muted " style="font-size: 16pt ">{{ "dontHaveRules" | translate }}</p>
+        <button id="noPlantBtn" type="button" (click)="newRule.open()" class="btn newRule"><i class='fa fa-plus' ></i>&nbsp;{{"addnewrule"|translate}}</button>
+      </div>
+    </div>
+  </section>
+
+  <modal #newRule id="newRuleModal" data-toggle="tooltip" data-placement="top" title="{{ 'addnewrule' | translate }}" modalClass="modal-md"
+    [closeOnOutsideClick]="false" (onClose)="onClose()">
+    <modal-content>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-2">{{"plantOwn"|translate}}</label>
+          <div class="col-sm-8">
+            <ng-select #plantageOwner [items]="owners" (selected)="selectedOwner($event);ow=true;" (removed)="removedOwner($event);ow=false;"
+              (typed)="typedOwner($event)" placeholder='{{"chooseOwn"|translate}}'>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="ow">
+          <label class="control-label col-sm-2">{{"plantage"|translate}}</label>
+          <div class="col-sm-8">
+            <ng-select #plantage [multiple]="true" [items]="plantages" (selected)="selectedPlantage($event);pl=true;" (removed)="removedPlantage($event)"
+              (typed)="typedPlantage($event)" placeholder='{{"choosePlan"|translate}}'>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class='col-sm-8 col-sm-offset-2' *ngIf="pl">
+            <div class="box box-info top-border">
+              <div class="box-header">
+                <i class="fa fa-envelope"></i>
+                <h3 class="box-title">{{'message'|translate}}</h3>
+              </div>
+              <div class="box-body">
+                <form action="# " method="post">
+                  <div>
+                    <textarea [(ngModel)]='ruleMessage' name='message' class="textarea" placeholder="{{'message'|translate}}" style="width:100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="pl">
+          <label class="control-label col-sm-2">{{"measurer"|translate}}</label>
+          <div class="col-sm-8">
+            <select class="form-control" required #mv name="measureValue " id="editMeasureValue" [(ngModel)]="measurer" name="measurer ">
+                                <option value="Vlažnost vazduha">{{'humidityRule'|translate}}</option>
+                                <option value="Poljski vodni kapacitet">{{'soil'|translate}}</option>
+                                <option value="Ph vrednost">{{'ph'|translate}}</option>
+                                <option value="Kalcijum-karbonat(CaCO3)">{{'calcium'|translate}}</option>
+                                <option value="Azot(N)">{{'azot'|translate}}</option>
+                                <option value="Kalijum(K2O)">{{'kalijum'|translate}}</option>
+                                <option value="Fosfor(P2O5)">{{'fosfor'|translate}}</option>
+                                <option value="Humus">Humus</option>
+                                <option value="Temperatura zemlje">{{"tempGround"|translate}}</option>
+                                <option value="Temperatura vazduha">{{'airTemp'|translate}}</option>
+                                <option value="Mogucnost padavina">{{'precip'|translate}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="measurer ">
+          <label class="control-label col-sm-2">{{"value"|translate}}</label>
+          <div class="col-sm-2" style="padding-right:0;">
+            <select class="form-control" [(ngModel)]="value" name="value" style="padding:0;">
+              <option value="manje">{{"lessThan"|translate}} </option>
+              <option value="vece">{{'greaterThan'|translate}} </option>
+              <option value="jednako">{{'equals'|translate}}</option>
+            </select>
+          </div>
+
+          <div class="col-sm-2" style="padding-right:0;">
+            <input class="form-control col-sm-10" type="number" name="rulevalue" [(ngModel)]="ruleValue" min="-30" max="100" />
+          </div>
+          <div class="col-sm-1" style="padding-right:0;">
+            <label class="control-label">{{getMeasuringUnit(measurer)}}</label>
+          </div>
+
+          <label *ngIf="measurer!='Temperatura vazduha' &&measurer!='Mogucnost padavina'" class="control-label col-sm-2" style="padding-left:0;padding-right:0;">{{"lastRule"|translate}}</label>
+          <label *ngIf="measurer=='Temperatura vazduha' ||measurer=='Mogucnost padavina'" class="control-label col-sm-2" style="padding-left:0;padding-right:0;">{{"futureRule"|translate}}</label>
+          <div class="col-sm-2 ">
+            <input class="form-control" type="number" [(ngModel)]="period " name="period " min="1" max="10" />
+          </div>
+          <label class="control-label col-sm-1" style="text-align:left;padding-left:0;">{{"daysRule"|translate}}</label>
+        </div>
+        <p *ngIf="period&&value&&measurer&&ruleValue" class="text-success col-sm-offset-2" style="cursor:pointer;" (click)="addNewCondition()"><i class="fa fa-plus fa-lg"></i>&nbsp;{{'newCon'|translate}}</p>
+      </form>
+
+      <h4 *ngIf="addedConditions.length>0">{{'addedRules'|translate}}</h4>
+      <table class="table table-stripped table-condensed" *ngIf="addedConditions.length>0">
+        <thead>
+          <tr>
+            <th>{{'measurer'|translate}}</th>
+            <th>{{'value'|translate}}</th>
+            <th>{{'period'|translate}}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ac of addedConditions">
+            <td>{{ac.measurer}}</td>
+            <td><span *ngIf="ac.value=='manje'">&lt;</span><span *ngIf="ac.value=='vece'">&gt;</span><span *ngIf="ac.value=='jednako'">=</span>              {{ac.ruleValue}} {{getMeasuringUnit(ac.measurer)}}</td>
+            <td>
+              <span *ngIf="ac.measurer!='Temperatura vazduha'&&ac.measurer!='Mogucnost padavina'">{{'lastRule'|translate}} </span>
+              <span *ngIf="ac.measurer=='Temperatura vazduha'||ac.measurer=='Mogucnost padavina'">{{'futureRule'|translate}} </span>{{ac.period}}
+              {{"daysRule"|translate}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </modal-content>
+
+    <modal-footer>
+      <button [disabled]="addedConditions.length==0" class="btn btn-primary" (click)="save();newRule.close()">{{ "addRuleSave" | translate }}</button>
+    </modal-footer>
+  </modal>

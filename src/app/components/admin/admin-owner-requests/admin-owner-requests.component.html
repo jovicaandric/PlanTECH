@@ -1,0 +1,81 @@
+<app-topnav></app-topnav>
+<app-admin-sidebar></app-admin-sidebar>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>{{"owner-req" | translate}}</h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div *ngIf='users.length' style="overflow-x:auto;">
+      <div class="input-group">
+        <input type="text" (keyup)='filter()' name="search" class="form-control" name="search" [(ngModel)]="search" required #searchField="ngModel"
+          placeholder="{{'search'|translate}}">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+
+      <table class="table table-striped table-responsive" [mfData]="users" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+          <tr>
+            <th style="width: 5%">
+              <mfDefaultSorter by="Id">ID</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="Username">{{"username"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="Firstname">{{"firstname"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="Lastname">{{"lastname"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 5%">
+              <mfDefaultSorter by="BillingPlan">{{"billingplan"|translate}}</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="Email">Email</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              {{"options"|translate}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data" class="data-row">
+            <td>{{item.Id}}</td>
+            <td>{{item.Username}}</td>
+            <td>{{item.Firstname}}</td>
+            <td>{{item.Lastname}}</td>
+            <td>{{item.BillingPlan}}</td>
+            <td>{{item.Email}}</td>
+            <td>
+              <span class="glyphicon glyphicon-ok text-success" style="cursor:pointer" (click)="confirmRequest(item)"></span>&nbsp;
+              <span class="glyphicon glyphicon-remove text-danger" style="cursor:pointer" (click)="rejectRequest(item)"></span>&nbsp;
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div *ngIf="!users.length" class="message-container">
+      <div class="message">
+        <i class="fa fa-user-plus" style="font-size: 92pt;"></i>
+        <p class="text-muted" style="font-size: 16pt">No ownership requests.</p>
+      </div>
+    </div>
+
+  </section>
+  <!-- /.content -->
+  <ng2-toasty></ng2-toasty>
+</div>
+<!-- /.content-wrapper -->
